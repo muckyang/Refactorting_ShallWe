@@ -1,4 +1,4 @@
-package refactoring.shallWe.entity.tag;
+package refactoring.shallwe.entity.tag;
 
 import lombok.Getter;
 import lombok.Setter;

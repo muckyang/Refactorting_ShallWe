@@ -1,4 +1,4 @@
-package refactoring.shallWe.entity.user;
+package refactoring.shallwe.entity.user;
 
 
 import lombok.Getter;
@@ -22,6 +22,13 @@ public class Info {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
+
+    public Info(int year ,int month, int day){
+        this.birthday = LocalDate.of(year,month,day);
+        this.setPoint(1000);
+        this.userStatus = UserStatus.ACTIVE;
+    }
+
 
     public void setPoint(int point) {
         this.point = point;

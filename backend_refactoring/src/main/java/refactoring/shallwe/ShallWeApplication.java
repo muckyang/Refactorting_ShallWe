@@ -1,13 +1,13 @@
-package refactoring.shallWe;
+package refactoring.shallwe;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ShallWeApplication {
+public class ShallweApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ShallWeApplication.class, args);
+		SpringApplication.run(ShallweApplication.class, args);
 	}
 
 }

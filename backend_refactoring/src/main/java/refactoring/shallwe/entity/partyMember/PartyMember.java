@@ -1,16 +1,17 @@
-package refactoring.shallWe.entity.partyMember;
+package refactoring.shallwe.entity.partyMember;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import refactoring.shallWe.entity.order.Order;
-import refactoring.shallWe.entity.user.User;
+import refactoring.shallwe.entity.order.Order;
+import refactoring.shallwe.entity.user.User;
 
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "party")
@@ -36,8 +37,14 @@ public class PartyMember {
 
     private String joinDescription;
 
-    private enum PartyStatus{
+    public enum PartyStatus {
         JOIN, CANCEL
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+        order.getMembers().add(this);
+        order.setSumPrice(order.getSumPrice() + this.price);
     }
 
 }

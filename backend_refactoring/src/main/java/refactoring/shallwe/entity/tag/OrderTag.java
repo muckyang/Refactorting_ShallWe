@@ -1,8 +1,8 @@
-package refactoring.shallWe.entity.tag;
+package refactoring.shallwe.entity.tag;
 
 import lombok.Getter;
 import lombok.Setter;
-import refactoring.shallWe.entity.order.Order;
+import refactoring.shallwe.entity.order.Order;
 
 import javax.persistence.*;
 
