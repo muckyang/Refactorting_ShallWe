@@ -1,11 +1,11 @@
-package refactoring.shallWe.entity.comment;
+package refactoring.shallwe.entity.comment;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import refactoring.shallWe.entity.order.Order;
-import refactoring.shallWe.entity.user.User;
+import refactoring.shallwe.entity.order.Order;
+import refactoring.shallwe.entity.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Entity
 @Setter @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "comment")
 public class Comment {
 
@@ -23,7 +22,7 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user_id;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
@@ -39,7 +38,14 @@ public class Comment {
 
     //TODO update -> Logger / status change Updated
     public enum CommentStatus{
-        ACTIVE, UPDATED , BAN
+        NORMAL, UPDATED , BAN
     }
+
+    public void setOrder(Order order){
+        this.order = order;
+        order.addComment(this);
+    }
+
+
 
 }
