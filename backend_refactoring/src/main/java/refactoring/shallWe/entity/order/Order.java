@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import refactoring.shallWe.entity.comment.Comment;
+import refactoring.shallWe.entity.like.OrderLike;
 import refactoring.shallWe.entity.partyMember.PartyMember;
 import refactoring.shallWe.entity.tag.OrderTag;
 import refactoring.shallWe.entity.user.User;
@@ -41,12 +42,15 @@ public class Order {
     private String title;
     private String description;
     private int minPrice;
+
     @Column(insertable = false)
     private int sumPrice;
-    //can self calculate
-    //private int sumPrice;
 
-    // Likes
+    private int likeCount;
+    private int commentCount;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderLike> orderLikeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "order")
     private List<OrderTag> orderTags = new ArrayList<>();

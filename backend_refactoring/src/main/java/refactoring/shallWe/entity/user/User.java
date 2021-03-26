@@ -29,6 +29,7 @@ public class User {
     @Column(name = "user_info")
     private Info info;
 
+//    댓글은 양방향이 필요없다.
 //    @OneToMany(mappedBy = "writer")
 //    private List<Comment> comments = new ArrayList<>();
 
@@ -37,6 +38,5 @@ public class User {
 
     @Column(insertable = false, updatable = false)
     private LocalDateTime createTime;
-
 
 }

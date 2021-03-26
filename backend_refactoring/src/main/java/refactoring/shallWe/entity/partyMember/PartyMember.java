@@ -28,10 +28,13 @@ public class PartyMember {
     @JoinColumn(name = "user_id")
     private User member;
 
+    //TODO 1000원 이상만 가능 하도록
     private int price;
 
     @Enumerated(EnumType.STRING)
     private PartyStatus status;
+
+    private String joinDescription;
 
     private enum PartyStatus{
         JOIN, CANCEL
