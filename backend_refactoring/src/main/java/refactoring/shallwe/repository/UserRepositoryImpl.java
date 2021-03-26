@@ -1,7 +1,7 @@
-package refactoring.shallWe.repository;
+package refactoring.shallwe.repository;
 
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import refactoring.shallWe.entity.user.User;
+import refactoring.shallwe.entity.user.User;
 
 public class UserRepositoryImpl extends QuerydslRepositorySupport implements UserRepositoryCustom{
 

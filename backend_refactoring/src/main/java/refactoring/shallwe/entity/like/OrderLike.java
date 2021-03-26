@@ -1,10 +1,10 @@
-package refactoring.shallWe.entity.like;
+package refactoring.shallwe.entity.like;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import refactoring.shallWe.entity.order.Order;
+import refactoring.shallwe.entity.order.Order;
 
 import javax.persistence.*;
 
@@ -20,11 +20,11 @@ public class OrderLike {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order")
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "like")
+    @JoinColumn(name = "like_id")
     private Like like;
 
 }
