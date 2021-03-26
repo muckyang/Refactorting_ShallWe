@@ -2,7 +2,7 @@
 
 ### TODO List
 
-- Entity 연관관계 설정 및 편의 메소드 작성 (021.03.26 ~ )
+- Entity 연관관계 설정 및 편의 메소드 작성 (2021.03.26 ~ )
 - User Test 
 - Repository / QueryDSL 적용
 - Service 
