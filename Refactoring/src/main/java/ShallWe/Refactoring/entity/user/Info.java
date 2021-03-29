@@ -28,7 +28,6 @@ public class Info {
         this.userStatus = UserStatus.ACTIVE;
     }
 
-
     public void setPoint(int point) {
         this.point = point;
         this.grade = (point / 1000) + 1;

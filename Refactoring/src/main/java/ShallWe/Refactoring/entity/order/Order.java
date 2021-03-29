@@ -1,6 +1,7 @@
 package ShallWe.Refactoring.entity.order;
 
 import ShallWe.Refactoring.entity.BaseEntity;
+import ShallWe.Refactoring.entity.tag.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,6 @@ import lombok.Setter;
 import ShallWe.Refactoring.entity.comment.Comment;
 import ShallWe.Refactoring.entity.like.OrderLike;
 import ShallWe.Refactoring.entity.partyMember.PartyMember;
-import ShallWe.Refactoring.entity.tag.OrderTag;
 import ShallWe.Refactoring.entity.user.User;
 
 import javax.persistence.*;
@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orders")
-public class Order  extends BaseEntity {
+public class Order extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "order_id")
@@ -54,7 +54,7 @@ public class Order  extends BaseEntity {
     private List<OrderLike> orderLikeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "order")
-    private List<OrderTag> orderTags = new ArrayList<>();
+    private List<Tag> tags = new ArrayList<>();
 
     // TODO temp 뭔지 확인 필요
     // image , url , kakaotalk link
@@ -65,11 +65,14 @@ public class Order  extends BaseEntity {
     @Column(name = "order_end_time")
     private LocalDateTime endTime;
 
-
     // 연관 관계 편의 메소드
     public void setUser(User user) {
         this.user = user;
         user.getOrders().add(this);
+    }
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
     }
 
     public void addPrice(int price) {
@@ -92,6 +95,7 @@ public class Order  extends BaseEntity {
     public boolean overGoalPrice() {
         return this.goalPrice <= this.sumPrice;
     }
+
 
 }
 
