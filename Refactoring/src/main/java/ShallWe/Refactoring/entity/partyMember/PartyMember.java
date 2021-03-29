@@ -1,5 +1,6 @@
 package ShallWe.Refactoring.entity.partyMember;
 
+import ShallWe.Refactoring.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "party")
-public class PartyMember {
+public class PartyMember  extends BaseEntity {
+    //TODO id 필드 삭제 예정) Order, User 합쳐서 키로 활용
     @Id
     @GeneratedValue
     @Column(name = "party_id")
@@ -34,12 +36,8 @@ public class PartyMember {
 
     @Enumerated(EnumType.STRING)
     private PartyStatus status;
-
     private String joinDescription;
 
-    public enum PartyStatus {
-        JOIN, CANCEL
-    }
 
     public void setOrder(Order order) {
         this.order = order;

@@ -1,5 +1,6 @@
 package ShallWe.Refactoring.entity.comment;
 
+import ShallWe.Refactoring.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter @Getter
 @NoArgsConstructor
 @Table(name = "comment")
-public class Comment {
+public class Comment extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "comment_id")
@@ -29,16 +30,10 @@ public class Comment {
 
     private String content;
 
-    @Enumerated(EnumType.STRING)
-    private CommentStatus status;
-
-    @Column(insertable = false, updatable = false)
-    private LocalDateTime createTime;
 
     //TODO update -> Logger / status change Updated
-    public enum CommentStatus{
-        NORMAL, UPDATED , BAN
-    }
+    @Enumerated(EnumType.STRING)
+    private CommentStatus status;
 
     public void setOrder(Order order){
         this.order = order;
