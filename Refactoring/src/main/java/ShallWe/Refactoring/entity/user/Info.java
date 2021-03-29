@@ -16,7 +16,6 @@ import java.time.LocalDate;
 public class Info {
     private int point;
     private int grade;
-
     private LocalDate birthday;
 
     @Column(name = "status")
@@ -35,7 +34,4 @@ public class Info {
         this.grade = (point / 1000) + 1;
     }
 
-    public enum UserStatus {
-        ACTIVE, BAN
-    }
 }

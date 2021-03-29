@@ -1,5 +1,6 @@
 package ShallWe.Refactoring.entity.user;
 
+import ShallWe.Refactoring.entity.BaseEntity;
 import ShallWe.Refactoring.entity.address.Address;
 import ShallWe.Refactoring.entity.order.Order;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor
 @Table(name = "user")
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "user_id")
@@ -32,13 +33,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
 
-    @GeneratedValue
-    @Column(insertable = false, updatable = false)
-    private LocalDateTime createTime;
-
     public void setAddress(Address address){
         this.address =address;
-
     }
 
 }

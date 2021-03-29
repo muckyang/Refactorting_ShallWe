@@ -1,4 +1,4 @@
-package ShallWe.Refactoring.repository;
+package ShallWe.Refactoring.repository.user;
 
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import ShallWe.Refactoring.entity.user.User;

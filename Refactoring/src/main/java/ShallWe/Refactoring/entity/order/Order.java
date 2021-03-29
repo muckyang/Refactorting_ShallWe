@@ -1,5 +1,6 @@
 package ShallWe.Refactoring.entity.order;
 
+import ShallWe.Refactoring.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Setter @Getter
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orders")
-public class Order {
+public class Order  extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "order_id")
@@ -33,7 +35,7 @@ public class Order {
     private OrderStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "order")
@@ -63,19 +65,16 @@ public class Order {
     @Column(name = "order_end_time")
     private LocalDateTime endTime;
 
-    @Column(insertable = false, updatable = false)
-    private LocalDateTime createTime;
-
 
     // 연관 관계 편의 메소드
-    public void setUser(User user){
-        this.user= user;
+    public void setUser(User user) {
+        this.user = user;
         user.getOrders().add(this);
     }
 
-    public void addPrice(int price){
+    public void addPrice(int price) {
         this.sumPrice += price;
-        if(this.overGoalPrice()){
+        if (this.overGoalPrice()) {
             this.status = OrderStatus.COMP_READY;
         }
     }
@@ -90,19 +89,10 @@ public class Order {
         this.commentCount--;
     }
 
-    public boolean overGoalPrice(){
+    public boolean overGoalPrice() {
         return this.goalPrice <= this.sumPrice;
     }
 
-
-
-    public enum OrderStatus{
-        WAITING, ON_GOING ,COMP_READY ,FAIL , SUCCEEDED
-    }
-
-    public enum Category {
-        SHARE, DELIVERY, N_ORDER
-    }
 }
 
 
