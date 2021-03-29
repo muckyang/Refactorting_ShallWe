@@ -1,6 +1,12 @@
 ### 기존 프로젝트에 QueryDSL 적용 및 읽기쉽도록 하는 프로젝트 입니다.  
 
-#### 2021.03.26 엔티티 리팩토링 시작 
+### TODO List
+
+- Entity 연관관계 설정 및 편의 메소드 작성 (2021.03.26 ~ )
+- JUnit Test
+- Repository / QueryDSL 적용
+- Service 
+- Controller / RequestEntity 
 
 
 
