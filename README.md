@@ -1,9 +1,12 @@
 ### 기존 프로젝트에 QueryDSL 적용 및 읽기쉽도록 하는 프로젝트 입니다.  
 
-### TODO List
+#### (2021.03.26)
+- Entity 연관관계 설정 및 편의 메소드 작성 
+#### (2021.03.29 ~ 30)
+- User Create Test 
+- Order Create Test + Party Create(작성자)
 
-- Entity 연관관계 설정 및 편의 메소드 작성 (2021.03.26 ~ )
-- JUnit Test
+
 - Repository / QueryDSL 적용
 - Service 
 - Controller / RequestEntity 
