@@ -43,7 +43,6 @@ public class UserTest {
         logger.info("User Initialize COMPLETED");
     }
 
-
     private void createUser() {
         String randomNum = (int) (Math.random() * 100)+"";
         User user = new User();
@@ -51,7 +50,7 @@ public class UserTest {
         user.setPassword("12341234");
         user.setNickname("nickname"+randomNum);
         user.setName("Clone"+randomNum);
-        user.setAddress(new Address("seoul", randomNum+"street", "room 1"+randomNum));
+        user.setAddress("seoul", randomNum+"street", "room 1"+randomNum);
         user.setInfo(createInfo());
         em.persist(user);
     }
