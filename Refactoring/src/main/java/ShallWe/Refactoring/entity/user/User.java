@@ -1,5 +1,6 @@
 package ShallWe.Refactoring.entity.user;
 
+import ShallWe.Refactoring.dto.user.UserRequest;
 import ShallWe.Refactoring.entity.BaseEntity;
 import ShallWe.Refactoring.entity.address.Address;
 import ShallWe.Refactoring.entity.order.Order;
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "user")
 public class User extends BaseEntity {
@@ -33,8 +35,24 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
 
-    public void setAddress(Address address){
-        this.address =address;
+    public User(UserRequest request) {
+        this.nickname = request.getNickname();
+        this.name = request.getName();
+        this.email = request.getEmail();
+        this.password = request.getPassword();
+        this.adapterAddress(request);
+        this.info = new Info(request.getYear(), request.getMonth(), request.getDay());
+    }
+
+    public void adapterAddress(UserRequest request) {
+        String city = request.getCity();
+        String street = request.getStreet();
+        String detail = request.getDetail();
+        setAddress(city, street, detail);
+    }
+
+    public void setAddress(String city,String street,String detail) {
+        this.address = new Address(city, street, detail);
     }
 
 }
