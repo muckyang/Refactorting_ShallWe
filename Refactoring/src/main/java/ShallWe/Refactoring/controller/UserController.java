@@ -18,14 +18,18 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class UserController {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final Logger logger;
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        this.logger = LoggerFactory.getLogger(this.getClass());
+    }
+
 
     @PostMapping("/joinUser")
     @ApiOperation(value = "User Join")
-    public Object joinUser(@RequestBody UserRequest request) throws Exception {
+    public @ResponseBody UserResponse joinUser(@RequestBody UserRequest request) throws Exception {
         User join = new User(request);
         userRepository.save(join);
         return new UserResponse(join);
@@ -33,21 +37,26 @@ public class UserController {
 
     @GetMapping("/user/{nickname}")
     @ApiOperation(value = "Nickname Reduplication Check")
-    public Object nicknameCheck(@PathVariable String nickname) {
-        if (isAvailableNickname(nickname)){
+    public ResponseEntity<String> nicknameCheck(@PathVariable String nickname) {
+        if (isAvailableNickname(nickname)) {
             logger.info("Available nickname.");
             return new ResponseEntity<>("Available nickname.", HttpStatus.OK);
         }
         logger.info("Nickname is already exists..");
         return new ResponseEntity<>("Nickname is already exists.", HttpStatus.OK);
     }
-
     private boolean isAvailableNickname(String nickname) {
         Optional<User> userOpt = userRepository.findUserByNickname(nickname);
         return userOpt.isEmpty();
     }
-
-    private void checkPassword(UserRequest request) {
+    @PutMapping("/user")
+    @ApiOperation("User Update")
+    public ResponseEntity<String> updateUser(@RequestBody UserRequest request){
+        if(isAvailableNickname(request.getNickname())){
+//            userRepository.updateUser();
+            return new ResponseEntity<>("Update Completed.",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Update failed.",HttpStatus.OK);
 
     }
 

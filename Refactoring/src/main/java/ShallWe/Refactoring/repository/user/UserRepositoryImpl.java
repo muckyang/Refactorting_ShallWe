@@ -18,7 +18,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
         this.queryFactory = new JPAQueryFactory(em);
     }
 
-    public List<UserResponse> findAll() {
+    public List<UserResponse> findUserAll() {
        return queryFactory
                 .select(new QUserResponse(user))
                 .from(user)

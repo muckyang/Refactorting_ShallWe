@@ -5,10 +5,12 @@ import ShallWe.Refactoring.entity.user.User;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
 @Data
+@ToString
 public class UserResponse {
     private String email;
     private String name;
