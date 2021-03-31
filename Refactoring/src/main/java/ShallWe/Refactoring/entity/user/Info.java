@@ -1,6 +1,7 @@
 package ShallWe.Refactoring.entity.user;
 
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,8 +23,8 @@ public class Info {
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
-    public Info(int year ,int month, int day){
-        this.birthday = LocalDate.of(year,month,day);
+    public Info(int year, int month, int day) {
+        this.birthday = LocalDate.of(year, month, day);
         this.setPoint(1000);
         this.userStatus = UserStatus.ACTIVE;
     }

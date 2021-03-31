@@ -44,7 +44,6 @@ public class Order extends BaseEntity {
     private String title;
     private String description;
     private int goalPrice;
-
     private int sumPrice;
 
     private int likeCount;

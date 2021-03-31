@@ -36,15 +36,15 @@ public class UserTest {
 
     @Test
     public void init() {
-        int userCnt = 10;//생성 인원 설정
+        int userCnt = 100;//생성 인원 설정
         for (int i = 0; i < userCnt; i++) {
-            createUser();
+            createUser(i);
         }
         logger.info("User Initialize COMPLETED");
     }
 
-    private void createUser() {
-        String randomNum = (int) (Math.random() * 100)+"";
+    private void createUser(int num) {
+        String randomNum = (int) (Math.random() * 1000)+(num*1000)+"";
         User user = new User();
         user.setEmail("user"+randomNum+"@never.com");
         user.setPassword("12341234");

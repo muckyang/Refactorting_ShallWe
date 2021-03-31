@@ -34,12 +34,10 @@ public class UserController {
     @GetMapping("/user/{nickname}")
     @ApiOperation(value = "Nickname Reduplication Check")
     public Object nicknameCheck(@PathVariable String nickname) {
-
         if (isAvailableNickname(nickname)){
             logger.info("Available nickname.");
             return new ResponseEntity<>("Available nickname.", HttpStatus.OK);
         }
-
         logger.info("Nickname is already exists..");
         return new ResponseEntity<>("Nickname is already exists.", HttpStatus.OK);
     }
