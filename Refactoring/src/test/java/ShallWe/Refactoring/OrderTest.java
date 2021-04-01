@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,14 +42,21 @@ public class OrderTest {
     private UserRepository userRepository;
 
     @BeforeEach
-    void createEM(){
+    void createEM() {
         logger.trace("*************** Order Test Start *******************");
     }
 
     @Test
-    public void saveOrder()  {
+    public void getOrderPageable() throws Exception {
+        PageRequest pageRequest = PageRequest.of(0, 10,
+                Sort.by(Sort.Direction.DESC, "order_id"));
+    }
+
+
+    @Test
+    public void saveOrder() {
         Optional<User> opUser = userRepository.findById(1L);
-        if(opUser.isEmpty()){
+        if (opUser.isEmpty()) {
             fail();
             return;
         }
@@ -74,15 +83,15 @@ public class OrderTest {
     }
 
 
-    public List<Tag> getTagList(List<String> tagList){
+    public List<Tag> getTagList(List<String> tagList) {
         List<Tag> result = new ArrayList<>();
-        for (String tagName : tagList){ //TODO Query DSL 을 써야할 것 같다. 한번씩 날리지 말고 한번에 다 날리면 됨.
+        for (String tagName : tagList) { //TODO Query DSL 을 써야할 것 같다. 한번씩 날리지 말고 한번에 다 날리면 됨.
             result.add(StringToTag(tagName));
         }
         return result;
     }
 
-    public Tag StringToTag(String name){
+    public Tag StringToTag(String name) {
         Tag tag = null;
 
 

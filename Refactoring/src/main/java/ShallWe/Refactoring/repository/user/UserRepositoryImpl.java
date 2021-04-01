@@ -1,14 +1,28 @@
 package ShallWe.Refactoring.repository.user;
 
-import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import ShallWe.Refactoring.entity.user.User;
+import ShallWe.Refactoring.dto.user.QUserResponse;
+import ShallWe.Refactoring.dto.user.UserResponse;
+import ShallWe.Refactoring.entity.user.QUser;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
-public class UserRepositoryImpl extends QuerydslRepositorySupport implements UserRepositoryCustom{
+import javax.persistence.EntityManager;
+import java.util.List;
 
-    public UserRepositoryImpl() {
-        super(User.class);
+import static ShallWe.Refactoring.entity.user.QUser.user;
+
+public class UserRepositoryImpl implements UserRepositoryCustom{
+
+    private final JPAQueryFactory queryFactory;
+
+    public UserRepositoryImpl(EntityManager em) {
+        this.queryFactory = new JPAQueryFactory(em);
     }
 
-    //overrides~
+    public List<UserResponse> findUserAll() {
+       return queryFactory
+                .select(new QUserResponse(user))
+                .from(user)
+                .fetch();
+    }
 
 }

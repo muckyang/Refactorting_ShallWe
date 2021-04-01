@@ -13,8 +13,6 @@ public class OrderController {
 
     @PostMapping("order")
     public String postOrder(){
-
-
         return "orderMake";
     }
 }
