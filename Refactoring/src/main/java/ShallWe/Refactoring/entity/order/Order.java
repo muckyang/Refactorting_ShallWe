@@ -2,10 +2,7 @@ package ShallWe.Refactoring.entity.order;
 
 import ShallWe.Refactoring.entity.BaseEntity;
 import ShallWe.Refactoring.entity.tag.Tag;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ShallWe.Refactoring.entity.comment.Comment;
 import ShallWe.Refactoring.entity.like.OrderLike;
 import ShallWe.Refactoring.entity.partyMember.PartyMember;
@@ -21,10 +18,11 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(of = {"user","title","description"})
 @Table(name = "orders")
 public class Order extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long id;
 

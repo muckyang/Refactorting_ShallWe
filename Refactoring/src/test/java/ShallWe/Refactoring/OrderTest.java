@@ -7,6 +7,7 @@ import ShallWe.Refactoring.entity.partyMember.PartyMember;
 import ShallWe.Refactoring.entity.partyMember.PartyStatus;
 import ShallWe.Refactoring.entity.tag.Tag;
 import ShallWe.Refactoring.entity.user.User;
+import ShallWe.Refactoring.repository.order.OrderRepository;
 import ShallWe.Refactoring.repository.user.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,6 +41,8 @@ public class OrderTest {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
     @BeforeEach
     void createEM() {
@@ -99,4 +102,12 @@ public class OrderTest {
 
     }
 
+    @Test
+    public void fetchTest() throws Exception {
+        List<Order> result = orderRepository.findEntityGraphAll();
+        for(Order eachOrder : result){
+            System.out.println(eachOrder.toString());
+        }
+        System.out.println(result.size());
+    }
 }

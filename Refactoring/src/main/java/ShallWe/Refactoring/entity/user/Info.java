@@ -33,5 +33,8 @@ public class Info {
         this.point = point;
         this.grade = (point / 1000) + 1;
     }
+    public void setUserStatus(UserStatus status){
+        this.userStatus = status;
+    }
 
 }

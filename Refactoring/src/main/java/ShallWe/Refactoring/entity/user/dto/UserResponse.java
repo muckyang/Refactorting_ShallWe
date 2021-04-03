@@ -1,10 +1,10 @@
-package ShallWe.Refactoring.dto.user;
+package ShallWe.Refactoring.entity.user.dto;
+
 
 import ShallWe.Refactoring.entity.address.Address;
 import ShallWe.Refactoring.entity.user.User;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
-import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDate;
@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Data
 @ToString
 public class UserResponse {
+    private Long id;
     private String email;
     private String name;
     private String nickname;
@@ -30,10 +31,6 @@ public class UserResponse {
         setAddress(user.getAddress());
         setBirthDay(user.getInfo().getBirthday());
     }
-
-
-
-
 
     private void setAddress(Address address) {
         this.city = address.getCity();
