@@ -13,7 +13,8 @@ public class BaseEntity {
 
     @CreatedDate
     @Column(name = "create_time", updatable = false)
-    LocalDateTime createTime = LocalDateTime.now();
+    LocalDateTime createTime;
     protected BaseEntity(){
     }
 }
+

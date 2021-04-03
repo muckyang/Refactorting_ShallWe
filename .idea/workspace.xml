@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2180850-4f3c-4a4e-b6ab-ae0ffb24a985" name="Default Changelist" comment="" />
+    <list default="true" id="f2180850-4f3c-4a4e-b6ab-ae0ffb24a985" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/RunApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/RunApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/config/SpringConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/config/SpringConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/entity/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/entity/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/entity/order/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/entity/order/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/entity/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/entity/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/repository/order/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/repository/order/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/repository/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/repository/user/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/repository/user/UserRepositoryCustom.java" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/repository/user/UserRepositoryCustom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/repository/user/UserRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/main/java/ShallWe/Refactoring/repository/user/UserRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/test/java/ShallWe/Refactoring/OrderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/test/java/ShallWe/Refactoring/OrderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Refactoring/src/test/java/ShallWe/Refactoring/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Refactoring/src/test/java/ShallWe/Refactoring/UserTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,6 +43,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Refactoring" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -47,5 +66,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -1,25 +1,28 @@
 package ShallWe.Refactoring.repository.user;
 
-import ShallWe.Refactoring.dto.user.UserResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ShallWe.Refactoring.entity.user.User;
+import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends UserRepositoryCustom, JpaRepository<User,Long> {
     Optional<User> findUserByNickname(String nickname);
-//    Page<User> findByName(String name, Pageable pageable);//count query O
 
-    //    내부적으로 limit +1 로 인피니티 스크롤링, 더 보기 구현가능
-//    Slice<User> findByName(String name, Pageable pageable); // count query X,
+    Page<User> findPageByPassword(String password, Pageable pageable);//count query O
+    Slice<User> findSliceByNameContaining(String name, Pageable pageable); // count query X,
+    // limit +1 infinite scrolling, more view 구현
 
+    @EntityGraph(attributePaths = {"orders"})
+    @Query("select u from User u")
+    List<User> findEntityGraphAll();
 
-    Page<UserResponse> findByPoint(int point,Pageable pageable);
-
-
-
+    @Query("select u from User u join fetch u.orders")
+    List<User> findFetchJoin();
 
 }

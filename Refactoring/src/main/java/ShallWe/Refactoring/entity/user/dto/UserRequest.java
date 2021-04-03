@@ -1,11 +1,11 @@
-package ShallWe.Refactoring.dto.user;
+package ShallWe.Refactoring.entity.user.dto;
+
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class UserRequest {
+    private Long id;
     private String email;
     private String password;
     private String name;

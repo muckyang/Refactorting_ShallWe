@@ -1,7 +1,6 @@
 package ShallWe.Refactoring;
 
-import ShallWe.Refactoring.dto.user.UserResponse;
-import ShallWe.Refactoring.entity.address.Address;
+import ShallWe.Refactoring.entity.user.dto.UserResponse;
 import ShallWe.Refactoring.entity.user.Info;
 import ShallWe.Refactoring.entity.user.User;
 import ShallWe.Refactoring.repository.user.UserRepository;
@@ -13,16 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -36,7 +33,7 @@ public class UserTest {
     UserRepository userRepository;
 
     @BeforeEach
-    void createEM() {
+    public void before() {
         logger.trace("*************** START USER TEST *******************");
     }
 
@@ -83,14 +80,41 @@ public class UserTest {
 
 
     @Test
-    @Transactional
-    public void getUserSlicePage() throws Exception {
-        PageRequest pageRequest = PageRequest.of(0,10, Sort.by(Sort.Direction.DESC,"user_id"));
-        Page<UserResponse> responses = userRepository.findByPoint(1000,pageRequest);
-//        Slice<UserResponse> responses = userRepository.findByPoint(1000);
-        for(UserResponse res : responses){
+    public void getUserPaging() throws Exception {
+        PageRequest pageRequest = PageRequest.of(0,10, Sort.by(Sort.Direction.DESC,"id"));
+        Page<User> page = userRepository.findPageByPassword("12341234",pageRequest);
+        Page<UserResponse> responses = page.map(UserResponse::new);
+
+        List<UserResponse> content = responses.getContent(); // 내부 내용 가져옴
+
+        for(UserResponse res : content){
             System.out.println(res.toString());
         }
+        System.out.println(content.size());
     }
 
+    @Test
+    public void getUserSlice() throws Exception {
+        PageRequest pageRequest = PageRequest.of(0,10, Sort.by(Sort.Direction.DESC,"id"));
+        Slice<User> slice = userRepository.findSliceByNameContaining("Clone",pageRequest);
+        // 람다식 자동 적용 slice.map(user -> new UserResponse(user));
+        Slice<UserResponse> responses= slice.map(UserResponse::new);
+        List<UserResponse> content = responses.getContent(); // 내부 내용 가져옴
+        for(UserResponse res : content){
+            System.out.println(res.toString());
+        }
+        System.out.println(content.size());
+    }
+
+    @Test
+    @Rollback
+    public void fetchTest() throws Exception {
+        List<User> result = userRepository.findEntityGraphAll();
+        for(User eachUser : result){
+            System.out.println(eachUser.toString());
+            if(eachUser.getOrders().size()>0)
+                System.out.println("얘는 ORDER 있는애야~");
+        }
+        System.out.println(result.size());
+    }
 }
