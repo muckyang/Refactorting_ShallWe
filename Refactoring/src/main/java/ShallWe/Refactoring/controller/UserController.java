@@ -29,16 +29,13 @@ public class UserController {
         this.logger = LoggerFactory.getLogger(this.getClass());
     }
 
-
     @PostMapping("/userJoin")
     @ApiOperation(value = "회원가입")
-    public @ResponseBody
-    UserResponse joinUser(@RequestBody UserRequest request) throws Exception {
+    public @ResponseBody UserResponse joinUser(@RequestBody UserRequest request) throws Exception {
         User join = new User(request);
         userRepository.save(join);
         return new UserResponse(join);
     }
-
 
     //컨버팅 방식 자잘하게 사용가능 repository로 찾게 됨
     //조회 용도로만 사용해야하는 주의사항이 있다.
@@ -103,8 +100,8 @@ public class UserController {
     @ApiOperation("Get User List / Paging")
     public Page<UserResponse> getUserForPaging(Pageable pageable){
         return  userRepository.getUserPaging(pageable);
-
     }
+
     @GetMapping("/userScroll")
     @ApiOperation("Get User List / Scroll")
     public Slice<UserResponse> getUSerForScroll(Pageable pageable){

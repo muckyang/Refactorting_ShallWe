@@ -11,9 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface OrderRepository extends JpaRepository<Order, Long> {
-//    List<Order> findByUser(User user);
-    Page<Order> findByUser(User user, Pageable pageable);
+public interface OrderRepository extends OrderRepositoryCustom, JpaRepository<Order, Long> {
+//    Page<Order> findByUser(User user, Pageable pageable);
 
     @EntityGraph(attributePaths = {"user"})
     @Query("select o from Order o")

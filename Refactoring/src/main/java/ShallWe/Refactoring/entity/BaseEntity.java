@@ -1,5 +1,6 @@
 package ShallWe.Refactoring.entity;
 
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 //엔티티에 Auditing 적용하도록 해줌
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
+@Getter
 public class BaseEntity {
 
     @CreatedDate
