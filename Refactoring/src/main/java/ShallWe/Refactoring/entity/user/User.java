@@ -50,7 +50,6 @@ public class User extends BaseEntity {
         String street = request.getStreet();
         String detail = request.getDetail();
         setAddress(city, street, detail);
-
     }
 
     public void setAddress(String city, String street, String detail) {

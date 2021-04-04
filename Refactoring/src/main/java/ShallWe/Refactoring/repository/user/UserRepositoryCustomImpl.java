@@ -15,11 +15,11 @@ import java.util.List;
 
 import static ShallWe.Refactoring.entity.user.QUser.user;
 
-public class UserRepositoryImpl implements UserRepositoryCustom {
+public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    public UserRepositoryImpl(EntityManager em) {
+    public UserRepositoryCustomImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
@@ -74,13 +74,5 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         }
         return new SliceImpl<>(content, pageable, hasNext);
     }
-
-//    public List<UserResponse> findUserResFetch() {
-//        return queryFactory
-//                .select(new QUserResponse(user))
-//                .from(user).join(user.get)
-//                .fetch();
-//    }
-
 
 }

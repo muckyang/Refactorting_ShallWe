@@ -25,6 +25,7 @@ public class UserResponse {
 
     @QueryProjection
     public UserResponse(User user) {
+        setId(user.getId());
         setEmail(user.getEmail());
         setName(user.getName());
         setNickname(user.getNickname());
