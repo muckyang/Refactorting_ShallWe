@@ -103,7 +103,7 @@ public class OrderTest {
         em.persist(order);
         partyMember.setOrder(order);
         em.persist(partyMember);
-
+        logger.info("complete");
     }
 
     @Test
