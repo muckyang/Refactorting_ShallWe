@@ -38,7 +38,6 @@ public class PartyMember  extends BaseEntity {
     private PartyStatus status;
     private String joinDescription;
 
-
     public void setOrder(Order order) {
         this.order = order;
         order.getMembers().add(this);

@@ -3,6 +3,7 @@ package ShallWe.Refactoring.entity.tag;
 import ShallWe.Refactoring.entity.order.Order;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@ToString(of = {"name"})
 @Table(name = "tag")
 public class Tag {
     @Id
@@ -18,13 +20,16 @@ public class Tag {
     @Column(name = "tag_id")
     private Long id;
 
-    @Column(name = "tag_name", unique = true)
+    @Column(name = "tag_name")
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private Order order;
 
+    public Tag(String name){
+        this.name = name;
+    }
     public void setOrder(Order order) {
         order.addTag(this);
         this.order = order;

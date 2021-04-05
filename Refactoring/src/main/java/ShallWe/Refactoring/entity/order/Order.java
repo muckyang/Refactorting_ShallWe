@@ -53,7 +53,7 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order")
     private List<Tag> tags = new ArrayList<>();
 
-    // TODO temp 뭔지 확인 필요
+    // TODO temp //저장, 임시저장 , 활성화  삭제해도 무방할듯.
     // image , url , kakaotalk link
 
     @OneToMany(mappedBy = "member")

@@ -2,6 +2,8 @@ package ShallWe.Refactoring.repository.order;
 
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.order.dto.OrderResponse;
+import ShallWe.Refactoring.entity.tag.QTag;
+import ShallWe.Refactoring.entity.tag.Tag;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.*;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ShallWe.Refactoring.entity.order.QOrder.*;
+import static ShallWe.Refactoring.entity.tag.QTag.*;
 
 public class OrderRepositoryCustomImpl implements OrderRepositoryCustom{
 
@@ -25,7 +28,7 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom{
     public Page<OrderResponse> getUserPaging(Pageable pageable) {
 
         QueryResults<Order> result = queryFactory
-                .selectFrom(order)
+                .select(order).from(order)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();
