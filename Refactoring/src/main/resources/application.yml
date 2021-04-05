@@ -14,5 +14,5 @@ spring:
       ddl-auto: none #create , create-drop , update , validate, none
     properties:
       hibernate:
-#        show_sql: true
-#        format_sql: true
+        show_sql: true
+        format_sql: true

@@ -3,10 +3,13 @@ package ShallWe.Refactoring;
 import ShallWe.Refactoring.entity.order.Category;
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.order.OrderStatus;
+import ShallWe.Refactoring.entity.order.dto.OrderRequest;
+import ShallWe.Refactoring.entity.order.dto.OrderResponse;
 import ShallWe.Refactoring.entity.partyMember.PartyMember;
 import ShallWe.Refactoring.entity.partyMember.PartyStatus;
 import ShallWe.Refactoring.entity.tag.Tag;
 import ShallWe.Refactoring.entity.user.User;
+import ShallWe.Refactoring.repository.category.CategoryRepository;
 import ShallWe.Refactoring.repository.order.OrderRepository;
 import ShallWe.Refactoring.repository.user.UserRepository;
 import org.junit.jupiter.api.Assertions;
@@ -16,7 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +48,8 @@ public class OrderTest {
     private UserRepository userRepository;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @BeforeEach
     void createEM() {
@@ -50,19 +57,27 @@ public class OrderTest {
     }
 
     @Test
-    public void getOrderPageable() throws Exception {
+    public void getOrderPageable() {
         PageRequest pageRequest = PageRequest.of(0, 10,
                 Sort.by(Sort.Direction.DESC, "order_id"));
     }
 
-
     @Test
     public void saveOrder() {
-        Optional<User> opUser = userRepository.findById(1L);
+
+        OrderRequest request = new OrderRequest(1L,"제목","내용",30000,"Category");
+        List<String > tags  = new ArrayList<>();
+        tags.add("밀키트");
+        tags.add("음식");
+        request.setTags(tags);
+
+        Optional<User> opUser = userRepository.findById(request.getUserId());
         if (opUser.isEmpty()) {
             fail();
             return;
         }
+        //TODO 카테고리 존재여부 확인
+
         User user = opUser.get();
         PartyMember partyMember = new PartyMember();
         partyMember.setMember(user);
@@ -78,25 +93,17 @@ public class OrderTest {
         order.setEndTime(LocalDateTime.now().plusHours(4L));
         order.setDescription("물건 같이사요");
         order.setTitle("물건 같이 구매하실 분 찾습니다.");
+
+        for(String tagName : tags){
+            Tag tag =new Tag(tagName);
+            tag.setOrder(order);
+            em.persist(tag);
+        }
+
         em.persist(order);
         partyMember.setOrder(order);
         em.persist(partyMember);
 
-        //태그 생략함
-    }
-
-
-    public List<Tag> getTagList(List<String> tagList) {
-        List<Tag> result = new ArrayList<>();
-        for (String tagName : tagList) { //TODO Query DSL 을 써야할 것 같다. 한번씩 날리지 말고 한번에 다 날리면 됨.
-            result.add(StringToTag(tagName));
-        }
-        return result;
-    }
-
-    public Tag StringToTag(String name) {
-        Tag tag = null;
-        return null;
     }
 
     @Test
@@ -107,4 +114,14 @@ public class OrderTest {
         }
         System.out.println(result.size());
     }
+
+    @Test
+    public void orderPageTest(){
+        Pageable pageable = PageRequest.of(0,1);
+        Page<OrderResponse> result = orderRepository.getUserPaging(pageable);
+        for(OrderResponse or :result.getContent()){
+            System.out.println(or.toString());
+        }
+    }
+
 }
