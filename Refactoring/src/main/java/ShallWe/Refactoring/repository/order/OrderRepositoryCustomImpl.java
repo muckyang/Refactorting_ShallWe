@@ -32,10 +32,12 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom{
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();
+
         List<OrderResponse> content = new ArrayList<>();
         for (Order eachOrder : result.getResults()) {
             content.add(new OrderResponse(eachOrder));
         }
+
         long total = result.getTotal();
         return new PageImpl<>(content,pageable,total);
     }

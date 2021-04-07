@@ -1,6 +1,7 @@
 package ShallWe.Refactoring.entity.order;
 
 import ShallWe.Refactoring.entity.BaseEntity;
+import ShallWe.Refactoring.entity.order.dto.OrderRequest;
 import ShallWe.Refactoring.entity.tag.Tag;
 import lombok.*;
 import ShallWe.Refactoring.entity.comment.Comment;
@@ -18,7 +19,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(of = {"user","title","description"})
+@ToString(of = {"user", "title", "description"})
 @Table(name = "orders")
 public class Order extends BaseEntity {
     @Id
@@ -46,6 +47,15 @@ public class Order extends BaseEntity {
 
     private int likeCount;
     private int commentCount;
+
+    public Order(OrderRequest request,User user){
+        this.setUser(user);
+        this.setTitle(request.getTitle());
+        this.setDescription(request.getDescription());
+        this.setGoalPrice(request.getGoalPrice());
+        this.setStatus(OrderStatus.WAITING);
+    }
+
 
     @OneToMany(mappedBy = "order")
     private List<OrderLike> orderLikeList = new ArrayList<>();
@@ -92,7 +102,6 @@ public class Order extends BaseEntity {
     public boolean overGoalPrice() {
         return this.goalPrice <= this.sumPrice;
     }
-
 
 }
 

@@ -2,17 +2,14 @@ package ShallWe.Refactoring;
 
 import ShallWe.Refactoring.entity.order.Category;
 import ShallWe.Refactoring.entity.order.Order;
-import ShallWe.Refactoring.entity.order.OrderStatus;
 import ShallWe.Refactoring.entity.order.dto.OrderRequest;
 import ShallWe.Refactoring.entity.order.dto.OrderResponse;
 import ShallWe.Refactoring.entity.partyMember.PartyMember;
 import ShallWe.Refactoring.entity.partyMember.PartyStatus;
 import ShallWe.Refactoring.entity.tag.Tag;
 import ShallWe.Refactoring.entity.user.User;
-import ShallWe.Refactoring.repository.category.CategoryRepository;
 import ShallWe.Refactoring.repository.order.OrderRepository;
 import ShallWe.Refactoring.repository.user.UserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -32,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -48,8 +44,6 @@ public class OrderTest {
     private UserRepository userRepository;
     @Autowired
     private OrderRepository orderRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     @BeforeEach
     void createEM() {
@@ -65,34 +59,37 @@ public class OrderTest {
     @Test
     public void saveOrder() {
 
-        OrderRequest request = new OrderRequest(1L,"제목","내용",30000,"Category");
-        List<String > tags  = new ArrayList<>();
+        List<String> tags  = new ArrayList<>();
         tags.add("밀키트");
         tags.add("음식");
-        request.setTags(tags);
+
+        OrderRequest request = new OrderRequest.Builder(1L)
+                .setTitle("제목")
+                .setDescription("내용")
+                .setGoalPrice(30000)
+                .setCategory("Category")
+                .setTags(tags)
+                .setEndTime(LocalDateTime.now().plusHours(4L))
+                .build();
 
         Optional<User> opUser = userRepository.findById(request.getUserId());
         if (opUser.isEmpty()) {
             fail();
             return;
         }
-        //TODO 카테고리 존재여부 확인
 
         User user = opUser.get();
+
+        //TODO 카테고리 mapping
+
         PartyMember partyMember = new PartyMember();
         partyMember.setMember(user);
         partyMember.setPrice(6000);
-        partyMember.setJoinDescription("안녕하세요");
         partyMember.setStatus(PartyStatus.JOIN);
 
-        Order order = new Order();
-        order.setUser(user);
-        order.setGoalPrice(30000);
+        Order order = new Order(request,user);
         order.setCategory(Category.SHARE);
-        order.setStatus(OrderStatus.WAITING);
         order.setEndTime(LocalDateTime.now().plusHours(4L));
-        order.setDescription("물건 같이사요");
-        order.setTitle("물건 같이 구매하실 분 찾습니다.");
 
         for(String tagName : tags){
             Tag tag =new Tag(tagName);
