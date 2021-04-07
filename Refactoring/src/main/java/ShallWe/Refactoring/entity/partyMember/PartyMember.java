@@ -1,6 +1,7 @@
 package ShallWe.Refactoring.entity.partyMember;
 
 import ShallWe.Refactoring.entity.BaseEntity;
+import ShallWe.Refactoring.entity.order.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,14 @@ public class PartyMember  extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PartyStatus status;
     private String joinDescription;
+
+    public PartyMember(User user ,Order order ,int price){
+        this.member = user;
+        this.order = order;
+        this.price= price;
+        this.status = PartyStatus.JOIN;
+        this.joinDescription = "글 작성자 입니다.";
+    }
 
     public void setOrder(Order order) {
         this.order = order;
