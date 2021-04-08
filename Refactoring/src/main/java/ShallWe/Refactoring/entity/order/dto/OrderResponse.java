@@ -4,22 +4,17 @@ import ShallWe.Refactoring.entity.comment.Comment;
 import ShallWe.Refactoring.entity.order.Category;
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.order.OrderStatus;
-import ShallWe.Refactoring.entity.tag.Tag;
-import ShallWe.Refactoring.entity.user.User;
-import lombok.Data;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.ToString;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
-@ToString(of={"id","title","tags"})
+@ToString(of={"id","userId","title","description"})
 public class OrderResponse {
     private Long id;
-    private User user;
+    private Long userId;
     private String title;
     private String description;
     private int goalPrice;
@@ -29,11 +24,11 @@ public class OrderResponse {
     private OrderStatus status;
     private Category category;
     private LocalDateTime createTime;
-    private List<Tag> tags = new ArrayList<>();
 
+    @QueryProjection
     public OrderResponse(Order order){
         this.id  = order.getId();
-        this.user  = order.getUser();
+        this.userId  = order.getUser().getId();
         this.title  = order.getTitle();
         this.description  = order.getDescription();
         this.goalPrice  = order.getGoalPrice();
@@ -43,7 +38,6 @@ public class OrderResponse {
         this.status  = order.getStatus();
         this.category  = order.getCategory();
         this.createTime = order.getCreateTime();
-        this.tags=order.getTags();
     }
 
 }

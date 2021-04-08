@@ -19,7 +19,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(of = {"user", "title", "description"})
+@ToString(of = {"user", "title", "description" ,"category","status","goalPrice","sumPrice","endTime"})
 @Table(name = "orders")
 public class Order extends BaseEntity {
     @Id
@@ -48,14 +48,6 @@ public class Order extends BaseEntity {
     private int likeCount;
     private int commentCount;
 
-    public Order(OrderRequest request,User user){
-        this.setUser(user);
-        this.setTitle(request.getTitle());
-        this.setDescription(request.getDescription());
-        this.setGoalPrice(request.getGoalPrice());
-        this.setStatus(OrderStatus.WAITING);
-    }
-
 
     @OneToMany(mappedBy = "order")
     private List<OrderLike> orderLikeList = new ArrayList<>();
@@ -71,6 +63,16 @@ public class Order extends BaseEntity {
 
     @Column(name = "order_end_time")
     private LocalDateTime endTime;
+
+    public Order(OrderRequest request,User user){
+        this.setUser(user);
+        this.setTitle(request.getTitle());
+        this.setDescription(request.getDescription());
+        this.setGoalPrice(request.getGoalPrice());
+        this.setStatus(OrderStatus.WAITING);
+        this.setEndTime(request.getEndTime());
+    }
+
 
     // 연관 관계 편의 메소드
     public void setUser(User user) {

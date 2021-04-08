@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 public interface OrderRepositoryCustom {
-    Page<OrderResponse> getUserPaging(Pageable pageable);
-    Slice<OrderResponse> getUserScroll(Pageable pageable);
+    Page<OrderResponse> getOrderPaging(Pageable pageable);
+    Slice<OrderResponse> getOrderScroll(Pageable pageable);
+
 }

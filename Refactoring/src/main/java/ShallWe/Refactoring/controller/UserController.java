@@ -63,7 +63,7 @@ public class UserController {
     }
 
     @PutMapping("/user")
-    @ApiOperation("User Update")
+    @ApiOperation("회원 수정")
     public @ResponseBody UserResponse UpdateUser(@RequestBody UserRequest request) {
         Optional<User> data = userRepository.findById(request.getId());
         if(data.isPresent()) {
@@ -97,13 +97,13 @@ public class UserController {
     }
     
     @GetMapping("/userPaging")
-    @ApiOperation("Get User List / Paging")
+    @ApiOperation("유저 조회 페이징")
     public Page<UserResponse> getUserForPaging(Pageable pageable){
         return  userRepository.getUserPaging(pageable);
     }
 
     @GetMapping("/userScroll")
-    @ApiOperation("Get User List / Scroll")
+    @ApiOperation("유저 조회 스크롤링")
     public Slice<UserResponse> getUSerForScroll(Pageable pageable){
         return userRepository.getUserScroll(pageable);
     }

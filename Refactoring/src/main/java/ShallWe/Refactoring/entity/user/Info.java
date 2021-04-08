@@ -4,6 +4,7 @@ package ShallWe.Refactoring.entity.user;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 
 @Embeddable
 @Getter
+@ToString(of = {"point","grade","birthday","userStatus"})
 @NoArgsConstructor
 public class Info {
     private int point;
