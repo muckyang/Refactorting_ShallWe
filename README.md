@@ -22,8 +22,9 @@
     
 <br/>
 
- - 빌더 패턴을 적용한 생성자로 DTO 객체로 변환시 this.field = req.getField()의 무수한 반복을 해결
-
+ - 빌더 패턴과 QueryProjection을 적용햐 DTO 객체로 변환시 this.field = req.getField()의 무수한 반복을 해결
+ - QueryDSL 쿼리의 select( new QType(qtype객체) ) 를 이용, 조회시 ResponseDTO 객체로 변환
+ - Request 요청시 
 
 
 
