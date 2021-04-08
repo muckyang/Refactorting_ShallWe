@@ -1,4 +1,4 @@
-package ShallWe.Refactoring.service.user;
+package ShallWe.Refactoring.service;
 
 import ShallWe.Refactoring.entity.user.User;
 import ShallWe.Refactoring.repository.user.UserRepository;

@@ -19,7 +19,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(of = {"user", "title", "description"})
+@ToString(of = {"user", "title", "description" ,"category","status","goalPrice","sumPrice","endTime"})
 @Table(name = "orders")
 public class Order extends BaseEntity {
     @Id

@@ -2,10 +2,7 @@ package ShallWe.Refactoring.entity.partyMember;
 
 import ShallWe.Refactoring.entity.BaseEntity;
 import ShallWe.Refactoring.entity.order.OrderStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.user.User;
 
@@ -16,6 +13,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(of={"id","order","member","price","status"})
 @Table(name = "party")
 public class PartyMember  extends BaseEntity {
     //TODO id 필드 삭제 예정) Order, User 합쳐서 키로 활용

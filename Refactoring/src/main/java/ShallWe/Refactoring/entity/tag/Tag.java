@@ -1,9 +1,7 @@
 package ShallWe.Refactoring.entity.tag;
 
 import ShallWe.Refactoring.entity.order.Order;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +10,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"name"})
 @Table(name = "tag")
 public class Tag {

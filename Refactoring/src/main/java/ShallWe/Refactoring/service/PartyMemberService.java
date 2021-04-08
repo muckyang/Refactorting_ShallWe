@@ -1,4 +1,4 @@
-package ShallWe.Refactoring.service.partyMember;
+package ShallWe.Refactoring.service;
 
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.partyMember.PartyMember;
@@ -13,9 +13,9 @@ public class PartyMemberService {
     @Autowired
     PartyMemberRepository partyMemberRepository;
 
-    public PartyMember createPartyMember(User user , Order order , int price){
+    public void createPartyMember(User user , Order order , int price){
         PartyMember partyMember = new PartyMember(user,order,price);
+        order.getMembers().add(partyMember);
         partyMemberRepository.save(partyMember);
-        return partyMember;
     }
 }

@@ -3,10 +3,12 @@ package ShallWe.Refactoring.entity.address;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
+@ToString(of={"city","street","detail"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Address {

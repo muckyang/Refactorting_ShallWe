@@ -1,4 +1,4 @@
-package ShallWe.Refactoring.service.tag;
+package ShallWe.Refactoring.service;
 
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.tag.Tag;

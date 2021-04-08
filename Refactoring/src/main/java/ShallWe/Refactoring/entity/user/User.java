@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(of = {"name", "email", "nickname"})
+@ToString(of = {"name", "email", "nickname","address","info",})
 @Table(name = "user")
 public class User extends BaseEntity {
     @Id

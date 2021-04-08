@@ -25,7 +25,7 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom{
     }
 
     @Override
-    public Page<OrderResponse> getUserPaging(Pageable pageable) {
+    public Page<OrderResponse> getOrderPaging(Pageable pageable) {
 
         QueryResults<Order> result = queryFactory
                 .select(order).from(order)
@@ -43,7 +43,7 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom{
     }
 
     @Override
-    public Slice<OrderResponse> getUserScroll(Pageable pageable) {
+    public Slice<OrderResponse> getOrderScroll(Pageable pageable) {
 
         QueryResults<Order> result = queryFactory
                 .selectFrom(order)

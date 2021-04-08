@@ -66,7 +66,7 @@ public class OrderTest {
     public void saveOrder() {
 
         List<String> tags = new ArrayList<>();
-        tags.add("밀키트");
+        tags.add("치킨");
         tags.add("음식");
 
         OrderRequest request = new OrderRequest.Builder(1L)
@@ -125,7 +125,7 @@ public class OrderTest {
     @Test
     public void orderPageTest() {
         Pageable pageable = PageRequest.of(0, 1);
-        Page<OrderResponse> result = orderRepository.getUserPaging(pageable);
+        Page<OrderResponse> result = orderRepository.getOrderPaging(pageable);
         for (OrderResponse or : result.getContent()) {
             System.out.println(or.toString());
         }
