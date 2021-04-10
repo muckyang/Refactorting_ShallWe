@@ -29,7 +29,7 @@ public class OrderSearchCustomImpl implements OrderSearchCustom {
         List<OrderResponse> results = queryFactory.select(new QOrderResponse(tag.order))
                 .from(tag)
                 .join(tag.order, order)
-                .on(tag.name.eq(tagName))
+                .where(tag.name.eq(tagName))
                 .fetch();
         logger.info(results.size()+"");
 
