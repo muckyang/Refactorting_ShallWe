@@ -2,7 +2,9 @@ package ShallWe.Refactoring;
 
 import ShallWe.Refactoring.entity.order.Category;
 import ShallWe.Refactoring.entity.order.Order;
+import ShallWe.Refactoring.entity.order.OrderStatus;
 import ShallWe.Refactoring.entity.order.dto.OrderRequest;
+import ShallWe.Refactoring.entity.order.dto.OrderRequestBuilder;
 import ShallWe.Refactoring.entity.order.dto.OrderResponse;
 import ShallWe.Refactoring.entity.partyMember.PartyMember;
 import ShallWe.Refactoring.entity.partyMember.PartyStatus;
@@ -69,14 +71,14 @@ public class OrderTest {
         tags.add("치킨");
         tags.add("음식");
 
-        OrderRequest request = new OrderRequest.Builder(1L)
-                .setTitle("제목")
-                .setDescription("내용123")
-                .setGoalPrice(30000)
-                .setCategory("Category")
-                .setTags(tags)
-                .setEndTime(LocalDateTime.now().plusHours(4L))
-                .build();
+        OrderRequest request = new OrderRequest();
+        request.setUserId(1L);
+        request.setTitle("제목");
+        request.setDescription("내용123");
+        request.setGoalPrice(30000);
+        request.setCategory("Category");
+        request.setTags(tags);
+        request.setEndTime(LocalDateTime.now().plusHours(4L));
 
         User user = getUser(request.getUserId());
 
@@ -138,6 +140,13 @@ public class OrderTest {
             return null;
         }
         return opUser.get();
+    }
+
+    @Test
+    public void EnumTest() throws Exception {
+        //then
+        Category status = Category.valueOf("SHARE");
+        System.out.println(status);
     }
 
 }

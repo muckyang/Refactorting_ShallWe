@@ -2,6 +2,7 @@ package ShallWe.Refactoring.entity.order;
 
 import ShallWe.Refactoring.entity.BaseEntity;
 import ShallWe.Refactoring.entity.order.dto.OrderRequest;
+import ShallWe.Refactoring.entity.order.dto.OrderRequestBuilder;
 import ShallWe.Refactoring.entity.tag.Tag;
 import lombok.*;
 import ShallWe.Refactoring.entity.comment.Comment;
@@ -64,7 +65,7 @@ public class Order extends BaseEntity {
     @Column(name = "order_end_time")
     private LocalDateTime endTime;
 
-    public Order(OrderRequest request,User user){
+    public Order(OrderRequest request, User user){
         this.setUser(user);
         this.setTitle(request.getTitle());
         this.setDescription(request.getDescription());

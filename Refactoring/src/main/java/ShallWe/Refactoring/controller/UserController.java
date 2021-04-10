@@ -64,7 +64,7 @@ public class UserController {
 
     @PutMapping("/user")
     @ApiOperation("회원 수정")
-    public @ResponseBody UserResponse UpdateUser(@RequestBody UserRequest request) {
+    public UserResponse UpdateUser(@RequestBody UserRequest request) {
         Optional<User> data = userRepository.findById(request.getId());
         if(data.isPresent()) {
             User user =data.get();
