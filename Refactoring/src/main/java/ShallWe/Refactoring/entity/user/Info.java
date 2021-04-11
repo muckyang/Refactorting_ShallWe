@@ -1,10 +1,7 @@
 package ShallWe.Refactoring.entity.user;
 
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -24,6 +21,7 @@ public class Info {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
+
 
     public Info(int year, int month, int day) {
         this.birthday = LocalDate.of(year, month, day);

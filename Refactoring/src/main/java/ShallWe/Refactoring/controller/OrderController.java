@@ -28,7 +28,6 @@ public class OrderController {
 
     @Autowired
     OrderRepository orderRepository;
-
     @Autowired
     OrderService orderService;
     @Autowired
@@ -37,13 +36,6 @@ public class OrderController {
     TagService tagService;
     @Autowired
     PartyMemberService partyMemberService;
-
-    @GetMapping("/list")
-    @ApiOperation("Order List Paging")
-    public Page<OrderResponse> getOrderList(Pageable pageable) {
-        return orderRepository.getOrderPaging(pageable);
-    }
-
 
     @PostMapping("/create")
     @ApiOperation("Order Create")
@@ -54,6 +46,14 @@ public class OrderController {
         partyMemberService.createPartyMember(user, order, request.getPay());
         return new OrderResponse(order);
     }
+
+    @GetMapping("/list")
+    @ApiOperation("Order List Paging")
+    public Page<OrderResponse> getOrderList(Pageable pageable) {
+        return orderRepository.getOrderPaging(pageable);
+    }
+
+
 
     @GetMapping("/searchByTag/{name}")
     public List<OrderResponse> searchByTagName(@PathVariable("name") String name) {

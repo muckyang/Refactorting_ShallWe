@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Setter
 @Getter
+@Builder(builderMethodName = "orderBuilder")
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString(of = {"user", "title", "description" ,"category","status","goalPrice","sumPrice","endTime"})
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString(of = {"user", "title", "description", "category", "status", "goalPrice", "sumPrice", "endTime"})
 @Table(name = "orders")
 public class Order extends BaseEntity {
     @Id
@@ -49,7 +49,6 @@ public class Order extends BaseEntity {
     private int likeCount;
     private int commentCount;
 
-
     @OneToMany(mappedBy = "order")
     private List<OrderLike> orderLikeList = new ArrayList<>();
 
@@ -65,15 +64,18 @@ public class Order extends BaseEntity {
     @Column(name = "order_end_time")
     private LocalDateTime endTime;
 
-    public Order(OrderRequest request, User user){
-        this.setUser(user);
-        this.setTitle(request.getTitle());
-        this.setDescription(request.getDescription());
-        this.setGoalPrice(request.getGoalPrice());
-        this.setStatus(OrderStatus.WAITING);
-        this.setEndTime(request.getEndTime());
+    public static OrderBuilder builder(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("필수 파라미터 누락");
+        }
+        //TODO CATEGORY SETTING
+        return orderBuilder()
+                .user(user)
+                .status(OrderStatus.WAITING)
+                .members(new ArrayList<>())
+                .tags(new ArrayList<>())
+                .comments(new ArrayList<>());
     }
-
 
     // 연관 관계 편의 메소드
     public void setUser(User user) {
