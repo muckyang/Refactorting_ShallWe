@@ -16,11 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Setter
 @Getter
+@Setter
+// 없앨수는 없음 변경이 필요한 경우도 있기 때문 아니면 SET메소드 다 작성해야함
+@Builder(builderMethodName = "orderBuilder")
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString(of = {"user", "title", "description" ,"category","status","goalPrice","sumPrice","endTime"})
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString(of = {"user", "title", "description", "category", "status", "goalPrice", "sumPrice", "endTime"})
 @Table(name = "orders")
 public class Order extends BaseEntity {
     @Id
@@ -49,15 +51,14 @@ public class Order extends BaseEntity {
     private int likeCount;
     private int commentCount;
 
-
     @OneToMany(mappedBy = "order")
     private List<OrderLike> orderLikeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "order")
     private List<Tag> tags = new ArrayList<>();
 
-    // TODO temp //저장, 임시저장 , 활성화  삭제해도 무방할듯.
-    // image , url , kakaotalk link
+    // TODO 기존 Temp 필드 삭제) 저장, 임시저장, 활성화 확인 필드.
+    // TODO image, url, Kakao Talk link 추가
 
     @OneToMany(mappedBy = "member")
     private List<PartyMember> members = new ArrayList<>();
@@ -65,47 +66,58 @@ public class Order extends BaseEntity {
     @Column(name = "order_end_time")
     private LocalDateTime endTime;
 
-    public Order(OrderRequest request, User user){
-        this.setUser(user);
-        this.setTitle(request.getTitle());
-        this.setDescription(request.getDescription());
-        this.setGoalPrice(request.getGoalPrice());
-        this.setStatus(OrderStatus.WAITING);
-        this.setEndTime(request.getEndTime());
+    public static OrderBuilder builder(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("필수 파라미터 누락");
+        }
+        //TODO CATEGORY SETTING
+        return orderBuilder()
+                .user(user)
+                .status(OrderStatus.WAITING)
+                .members(new ArrayList<>())
+                .tags(new ArrayList<>())
+                .comments(new ArrayList<>());
     }
-
 
     // 연관 관계 편의 메소드
     public void setUser(User user) {
         this.user = user;
-        user.getOrders().add(this);
+        user.addOrder(this);
     }
 
     public void addTag(Tag tag) {
-        this.tags.add(tag);
+        tags.add(tag);
     }
 
     public void addPrice(int price) {
-        this.sumPrice += price;
-        if (this.overGoalPrice()) {
-            this.status = OrderStatus.COMP_READY;
+        sumPrice += price;
+        if (overGoalPrice()) {
+            status = OrderStatus.COMP_READY;
         }
     }
 
+    public void addPartyMember(PartyMember partyMember) {
+        members.add(partyMember);
+        addPrice(partyMember.getPrice());
+    }
+
     public void addComment(Comment comment) {
-        this.comments.add(comment);
-        this.commentCount++;
+        comments.add(comment);
+        commentCount++;
     }
 
     public void removeComment(Comment comment) {
-        this.comments.remove(comment);
-        this.commentCount--;
+        comments.remove(comment);
+        commentCount--;
     }
 
     public boolean overGoalPrice() {
-        return this.goalPrice <= this.sumPrice;
+        return goalPrice <= sumPrice;
     }
 
+    public boolean isWriter(User user) {
+        return user.getId().equals(this.user.getId());
+    }
 }
 
 

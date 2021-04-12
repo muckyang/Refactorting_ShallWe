@@ -27,9 +27,7 @@ public class Comment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
-
     private String content;
-
 
     //TODO update -> Logger / status change Updated
     @Enumerated(EnumType.STRING)
@@ -39,7 +37,4 @@ public class Comment extends BaseEntity {
         this.order = order;
         order.addComment(this);
     }
-
-
-
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface UserRepositoryCustom {
     List<UserResponse> findUserAll();
-    UserResponse updateUser(UserRequest user);
+
     Page<UserResponse> getUserPaging(Pageable pageable);
     Slice<UserResponse> getUserScroll(Pageable pageable);
 //    public Page<UserResponse> findByInfoPoint(int point, Pageable pageable);
