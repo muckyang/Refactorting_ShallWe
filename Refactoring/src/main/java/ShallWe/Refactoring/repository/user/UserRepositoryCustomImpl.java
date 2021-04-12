@@ -30,22 +30,16 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                 .fetch();
     }
 
-    public UserResponse updateUser(UserRequest request) {
-        User result = queryFactory.selectFrom(user).where(user.id.eq(request.getId())).fetchOne();
-        queryFactory
-                .update(user).where(user.id.eq(request.getId()))
-                .set(user, result)
-                .execute();
-        return new UserResponse(result);
-    }
 
     @Override
     public Page<UserResponse> getUserPaging(Pageable pageable) {
+
         QueryResults<User> result = queryFactory
                 .selectFrom(user)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();
+
         List<UserResponse> content = new ArrayList<>();
         for (User eachUser : result.getResults()) {
             content.add(new UserResponse(eachUser));

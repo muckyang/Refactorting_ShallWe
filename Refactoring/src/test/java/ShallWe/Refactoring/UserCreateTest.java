@@ -1,5 +1,6 @@
-package ShallWe.Refactoring.User;
+package ShallWe.Refactoring;
 
+import ShallWe.Refactoring.entity.address.Address;
 import ShallWe.Refactoring.entity.user.dto.UserResponse;
 import ShallWe.Refactoring.entity.user.Info;
 import ShallWe.Refactoring.entity.user.User;
@@ -56,16 +57,18 @@ public class UserCreateTest {
 
     private void createUser(int num) {
         String randomNum = (int) (Math.random() * 1000)+(num*1000)+"";
-        User user = new User();
-        user.setEmail("user"+randomNum+"@never.com");
-        user.setPassword("12341234");
-        user.setNickname("nickname"+randomNum);
-        user.setName("Clone"+randomNum);
-        user.setAddress("seoul", randomNum+"street", "room 1"+randomNum);
-        user.setInfo(createInfo());
+        String name = "Clone"+randomNum;
+        String email = "user" + randomNum+ "@naver.com";
+        String password = "12341234";
+
+
+        User user = User.builder(name,email,password)
+                .nickname("nick" + randomNum)
+                .address(Address.builder("seoul",randomNum+"street","room 1"+randomNum).build())
+                .info(new Info(2021,3,13))
+                .build();
         em.persist(user);
     }
-
 
     public Info createInfo() {
         int year = (int) (Math.random() * 30) + 1990;
@@ -74,8 +77,6 @@ public class UserCreateTest {
         return new Info(year, month, day);
     }
 
-
-
     @Test
     @Rollback
     public void fetchTest() throws Exception {
@@ -83,7 +84,7 @@ public class UserCreateTest {
         for(User eachUser : result){
             System.out.println(eachUser.toString());
             if(eachUser.getOrders().size()>0)
-                System.out.println("얘는 ORDER 있는애야~");
+                System.out.println("생성한 order 가 있는 유저");
         }
         System.out.println(result.size());
     }

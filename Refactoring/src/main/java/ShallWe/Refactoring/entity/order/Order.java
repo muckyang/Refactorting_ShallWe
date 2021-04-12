@@ -17,6 +17,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
+// 없앨수는 없음 변경이 필요한 경우도 있기 때문 아니면 SET메소드 다 작성해야함
 @Builder(builderMethodName = "orderBuilder")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -55,8 +57,8 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order")
     private List<Tag> tags = new ArrayList<>();
 
-    // TODO temp //저장, 임시저장 , 활성화  삭제해도 무방할듯.
-    // image , url , kakaotalk link
+    // TODO 기존 Temp 필드 삭제) 저장, 임시저장, 활성화 확인 필드.
+    // TODO image, url, Kakao Talk link 추가
 
     @OneToMany(mappedBy = "member")
     private List<PartyMember> members = new ArrayList<>();
@@ -80,34 +82,42 @@ public class Order extends BaseEntity {
     // 연관 관계 편의 메소드
     public void setUser(User user) {
         this.user = user;
-        user.getOrders().add(this);
+        user.addOrder(this);
     }
 
     public void addTag(Tag tag) {
-        this.tags.add(tag);
+        tags.add(tag);
     }
 
     public void addPrice(int price) {
-        this.sumPrice += price;
-        if (this.overGoalPrice()) {
-            this.status = OrderStatus.COMP_READY;
+        sumPrice += price;
+        if (overGoalPrice()) {
+            status = OrderStatus.COMP_READY;
         }
     }
 
+    public void addPartyMember(PartyMember partyMember) {
+        members.add(partyMember);
+        addPrice(partyMember.getPrice());
+    }
+
     public void addComment(Comment comment) {
-        this.comments.add(comment);
-        this.commentCount++;
+        comments.add(comment);
+        commentCount++;
     }
 
     public void removeComment(Comment comment) {
-        this.comments.remove(comment);
-        this.commentCount--;
+        comments.remove(comment);
+        commentCount--;
     }
 
     public boolean overGoalPrice() {
-        return this.goalPrice <= this.sumPrice;
+        return goalPrice <= sumPrice;
     }
 
+    public boolean isWriter(User user) {
+        return user.getId().equals(this.user.getId());
+    }
 }
 
 

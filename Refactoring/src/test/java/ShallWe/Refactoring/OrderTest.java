@@ -14,6 +14,7 @@ import ShallWe.Refactoring.repository.order.OrderRepository;
 import ShallWe.Refactoring.repository.partyMember.PartyMemberRepository;
 import ShallWe.Refactoring.repository.tag.TagRepository;
 import ShallWe.Refactoring.repository.user.UserRepository;
+import ShallWe.Refactoring.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -52,6 +53,8 @@ public class OrderTest {
     private TagRepository tagRepository;
     @Autowired
     private PartyMemberRepository partyMemberRepository;
+    @Autowired
+    private UserService userService;
 
     @BeforeEach
     public void createEM() {
@@ -66,20 +69,19 @@ public class OrderTest {
 
     @Test
     public void saveOrder() {
-
         List<String> tags = new ArrayList<>();
         tags.add("치킨");
 
         OrderRequest request = new OrderRequest();
         request.setUserId(1L);
-        request.setTitle("치킨조아");
-        request.setDescription("치킨 같이 시켜먹어요!");
+        request.setTitle("치킨먹을사람~");
+        request.setDescription("치킨 같이 시켜 먹어요!");
         request.setGoalPrice(32000);
         request.setCategory(Category.DELIVERY.toString());
         request.setTags(tags);
         request.setEndTime(LocalDateTime.now().plusHours(4L));
 
-        User user = getUser(request.getUserId());
+        User user = userService.findUser(request.getUserId());
 
         Order order = Order.builder(user)
                 .title(request.getTitle())
@@ -89,7 +91,6 @@ public class OrderTest {
                 .category(Category.DELIVERY)
                 .status(OrderStatus.WAITING)
                 .build();
-
 
         logger.info(order.toString());
         orderRepository.save(order);
@@ -104,12 +105,10 @@ public class OrderTest {
         }
 
         logger.info("before Party New");
-        PartyMember partyMember = new PartyMember();
-
-        partyMember.setMember(user);
-        partyMember.setPrice(6000);
-        partyMember.setStatus(PartyStatus.JOIN);
-        partyMember.setOrder(order);
+        PartyMember partyMember = PartyMember.builder(user, order, 6000)
+                .status(PartyStatus.JOIN)
+                .joinDescription("글 게시자 본인 입니다.")
+                .build();
 
         logger.info("before Party Save");
         partyMemberRepository.save(partyMember);
@@ -133,15 +132,6 @@ public class OrderTest {
         for (OrderResponse or : result.getContent()) {
             System.out.println(or.toString());
         }
-    }
-
-    public User getUser(Long id) {
-        Optional<User> opUser = userRepository.findById(id);
-        if (opUser.isEmpty()) {
-            fail();
-            return null;
-        }
-        return opUser.get();
     }
 
     @Test

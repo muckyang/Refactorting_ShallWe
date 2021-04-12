@@ -10,8 +10,8 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
-@AllArgsConstructor
+@Builder(builderMethodName = "partyMemberBuilder")
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @ToString(of={"id","order","member","price","status"})
 @Table(name = "party")
@@ -29,26 +29,42 @@ public class PartyMember  extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User member;
-
-    //TODO 1000원 이상만 가능 하도록
     private int price;
 
     @Enumerated(EnumType.STRING)
     private PartyStatus status;
     private String joinDescription;
 
-    public PartyMember(User user ,Order order ,int price){
-        this.member = user;
-        this.order = order;
-        this.price= price;
-        this.status = PartyStatus.JOIN;
-        this.joinDescription = "글 작성자 입니다.";
+    public static PartyMemberBuilder builder(User user ,Order order ,int price){
+        if(user == null || order==null){
+            throw new IllegalArgumentException("null pointer exception");
+        }
+        else if(price < 1000){
+            throw new IllegalArgumentException("최소 금액 미충족 ");
+        }
+        return partyMemberBuilder()
+                .member(user)
+                .order(order)
+                .price(price);
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
-        order.getMembers().add(this);
-        order.setSumPrice(order.getSumPrice() + this.price);
+    public void setStatus(PartyStatus status){
+        this.status = status;
+    }
+
+    public void joinApprove(){
+        if(this.status == PartyStatus.WAITING){
+            this.setStatus(PartyStatus.JOIN);
+            order.addPrice(this.price);
+        }else
+            throw new IllegalStateException("is not Waiting!");
+    }
+
+    public void joinCancel(){
+        if(this.status == PartyStatus.WAITING){
+            this.setStatus(PartyStatus.CANCEL);
+        }else
+            throw new IllegalStateException("is not Waiting!");
     }
 
 }

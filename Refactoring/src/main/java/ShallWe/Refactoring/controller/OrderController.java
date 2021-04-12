@@ -2,11 +2,8 @@ package ShallWe.Refactoring.controller;
 
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.order.dto.OrderRequest;
-import ShallWe.Refactoring.entity.order.dto.OrderRequestBuilder;
 import ShallWe.Refactoring.entity.order.dto.OrderResponse;
 import ShallWe.Refactoring.entity.user.User;
-import ShallWe.Refactoring.repository.order.OrderRepository;
-import ShallWe.Refactoring.repository.tag.TagRepository;
 import ShallWe.Refactoring.service.OrderService;
 import ShallWe.Refactoring.service.PartyMemberService;
 import ShallWe.Refactoring.service.TagService;
@@ -20,14 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/order")
+@RequestMapping("/api")
 public class OrderController {
 
-    @Autowired
-    TagRepository tagRepository;
-
-    @Autowired
-    OrderRepository orderRepository;
     @Autowired
     OrderService orderService;
     @Autowired
@@ -37,7 +29,7 @@ public class OrderController {
     @Autowired
     PartyMemberService partyMemberService;
 
-    @PostMapping("/create")
+    @PostMapping("/orders/create")
     @ApiOperation("Order Create")
     public OrderResponse createOrder(@RequestBody OrderRequest request) {
         User user = userService.findUser(request.getUserId());
@@ -47,21 +39,17 @@ public class OrderController {
         return new OrderResponse(order);
     }
 
-    @GetMapping("/list")
+    @GetMapping("/orders/{id}")
+    @ApiOperation("Order Get")
+    public OrderResponse getOrder(@PathVariable Long orderId) {
+        Order order = orderService.findOrder(orderId);
+        return new OrderResponse(order);
+    }
+
+    @GetMapping("/orders/list/paging")
     @ApiOperation("Order List Paging")
     public Page<OrderResponse> getOrderList(Pageable pageable) {
-        return orderRepository.getOrderPaging(pageable);
+        return orderService.findByPaging(pageable);
     }
 
-
-
-    @GetMapping("/searchByTag/{name}")
-    public List<OrderResponse> searchByTagName(@PathVariable("name") String name) {
-        return orderService.searchByTag(name);
-    }
-
-    @GetMapping("/searchByUserId/{id}")
-    public List<OrderResponse> searchByUser(@PathVariable("id") Long id) {
-        return orderService.searchByUserId(id);
-    }
 }

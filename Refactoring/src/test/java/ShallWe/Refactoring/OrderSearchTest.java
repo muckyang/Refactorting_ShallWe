@@ -45,9 +45,7 @@ public class OrderSearchTest {
 
     @Test
     public void OrderSearchByTag() {
-
         List<OrderResponse> orderResponses = orderRepository.searchByTagName("음식");
-
     }
 }
 

@@ -4,10 +4,7 @@ import ShallWe.Refactoring.entity.BaseEntity;
 import ShallWe.Refactoring.entity.address.Address;
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.user.dto.UserRequest;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 
 import javax.persistence.*;
@@ -17,6 +14,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder(builderMethodName = "userBuilder")
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @ToString(of = {"name", "email", "nickname","address","info",})
 @Table(name = "user")
@@ -36,6 +35,13 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
 
+    public static UserBuilder builder(String name,String email,String password){
+        return userBuilder()
+                .name(name)
+                .email(email)
+                .password(password);
+    }
+
     public User(UserRequest request) {
         int year = request.getYear();
         int month = request.getMonth();
@@ -53,7 +59,7 @@ public class User extends BaseEntity {
     }
 
     public void setAddress(String city, String street, String detail) {
-        this.address = new Address(city, street, detail);
+        this.address = Address.builder(city,street,detail).build();
     }
 
     public void adapting(UserRequest request) {
@@ -62,6 +68,10 @@ public class User extends BaseEntity {
         this.email = request.getEmail();
         this.password = request.getPassword();
         this.adapterAddress(request);
+    }
+
+    public void addOrder(Order order){
+        orders.add(order);
     }
 
 }

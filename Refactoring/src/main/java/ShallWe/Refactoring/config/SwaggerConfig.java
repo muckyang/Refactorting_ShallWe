@@ -13,10 +13,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("TEST")
-                .description("FIRST API")
+                .title("API DOCUMENTS")
+                .description("SHALL WE API")
                 .build();
     }
 

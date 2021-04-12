@@ -1,14 +1,14 @@
 package ShallWe.Refactoring.entity.address;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import ShallWe.Refactoring.entity.order.dto.OrderRequestBuilder;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
-@ToString(of={"city","street","detail"})
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(builderMethodName = "addressBuilder")
+@ToString(of = {"city", "street", "detail"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Address {
@@ -16,11 +16,14 @@ public class Address {
     private String street;
     private String detail;
 
-    public Address(String city, String street, String detail) {
-        this.city = city;
-        this.street = street;
-        this.detail = detail;
+    public static AddressBuilder builder(String city, String street, String detail) {
+        if(city == null || street == null || detail == null){
+            throw new IllegalArgumentException("null argument exception");
+        }
+        return addressBuilder().city(city).street(street).detail(detail);
     }
+
+
 }
 
 
