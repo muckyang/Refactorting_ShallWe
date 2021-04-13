@@ -59,5 +59,4 @@ public class PartyMember  extends BaseEntity {
             throw new IllegalStateException("is not Waiting!");
     }
 
-
 }

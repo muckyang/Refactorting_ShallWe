@@ -11,6 +11,7 @@ import ShallWe.Refactoring.service.OrderService;
 import ShallWe.Refactoring.service.PartyMemberService;
 import ShallWe.Refactoring.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +20,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class PartyMemberController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    PartyMemberService partyMemberService;
-    @Autowired
-    OrderService orderService;
-    @Autowired
-    UserService userService;
+    private final PartyMemberService partyMemberService;
+    private final OrderService orderService;
+    private final UserService userService;
 
     @PostMapping("/partyMembers")
     @ApiOperation("Add Member")
@@ -42,8 +41,8 @@ public class PartyMemberController {
     }
 
     @GetMapping("/join-members/{orderId}")
-    @ApiOperation("get Party Join List")
-    public List<PartyMemberResponse> getPartyMembers(@PathVariable("orderId") Long orderId) {
+    @ApiOperation("Get Join List")
+    public List<PartyMemberResponse> getJoinedMembers(@PathVariable("orderId") Long orderId) {
         Order order = orderService.findOrder(orderId);
         List<PartyMemberResponse> partyMembers = partyMemberService.findByOrderAndStatus(order, PartyStatus.JOIN);
         logger.info(partyMembers.size() + "");
@@ -51,9 +50,19 @@ public class PartyMemberController {
         return partyMembers;
     }
 
+    @GetMapping("/members/{orderId}")
+    @ApiOperation("Get All List")
+    public List<PartyMemberResponse> getPartyMembers(@PathVariable("orderId") Long orderId) {
+        Order order = orderService.findOrder(orderId);
+        List<PartyMemberResponse> partyMembers = partyMemberService.findByOrder(order);
+        logger.info(partyMembers.size() + "");
+
+        return partyMembers;
+    }
+
     //TODO 게시물 주인 / 게시물 번호 / 변경될 인원
     @PatchMapping("/partyMembers/join/{userId}/{orderId}/{memberId}")
-    @ApiOperation("Join Member")
+    @ApiOperation("Do Join Member")
     public String joinMember(@PathVariable("userId") Long userId,
                              @PathVariable("orderId") Long orderId,
                              @PathVariable("memberId") Long memberId) {
@@ -69,7 +78,7 @@ public class PartyMemberController {
     }
 
     @PatchMapping("/partyMembers/cancel/{userId}/{orderId}/{memberId}")
-    @ApiOperation("Cancel Member")
+    @ApiOperation("Do Cancel Member")
     public String cancelMember(@PathVariable("userId") Long userId,
                                @PathVariable("orderId") Long orderId,
                                @PathVariable("memberId") Long memberId) {
