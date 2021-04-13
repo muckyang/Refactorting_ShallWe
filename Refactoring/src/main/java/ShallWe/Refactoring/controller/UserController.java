@@ -61,21 +61,21 @@ public class UserController {
         return userOpt.isEmpty();
     }
 
-    @PutMapping("/users/{id}")
-    @ApiOperation("회원 수정")
-    public UserResponse UpdateUser(@PathVariable Long id,@RequestBody UserRequest request) {
-        Optional<User> data = userRepository.findById(id);
-        if (data.isPresent()) {
-            User user = data.get();
-            user.adapting(request);
-            return new UserResponse(user);
-        }
-        return null;
-    }
+//    @PutMapping("/users/{id}")
+//    @ApiOperation("회원 수정")
+//    public UserResponse updateUser(@PathVariable Long id,@RequestBody UserRequest request) {
+//        Optional<User> data = userRepository.findById(id);
+//        if (data.isPresent()) {
+//            User user = data.get();
+//            //update logic Service에 요청할것
+//            return new UserResponse(user);
+//        }
+//        return null;
+//    }
 
     @PutMapping("/user/ban/{id}")
     @ApiOperation("회원 밴")
-    public String BanUser(@PathVariable Long id) {
+    public String banUser(@PathVariable Long id) {
         Optional<User> data = userRepository.findById(id);
         if (data.isPresent()) {
             data.get().getInfo().setUserStatus(UserStatus.BAN);
@@ -86,7 +86,7 @@ public class UserController {
 
     @PatchMapping("/user/active/{id}")
     @ApiOperation("회원 활성화")
-    public String ActiveUser(@PathVariable Long id) {
+    public String activeUser(@PathVariable Long id) {
         Optional<User> data = userRepository.findById(id);
         if (data.isPresent()) {
             data.get().getInfo().setUserStatus(UserStatus.ACTIVE);

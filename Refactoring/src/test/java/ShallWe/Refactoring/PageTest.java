@@ -4,6 +4,7 @@ import ShallWe.Refactoring.entity.user.User;
 import ShallWe.Refactoring.entity.user.dto.UserResponse;
 import ShallWe.Refactoring.repository.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,8 @@ public class PageTest {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Test
-    public void getUserPaging() throws Exception {
+    @DisplayName("유저 페이징")
+    public void getUserPaging() {
         PageRequest pageRequest = PageRequest.of(0,10, Sort.by(Sort.Direction.DESC,"id"));
         Page<User> page = userRepository.findPageByPassword("12341234",pageRequest);
         Page<UserResponse> responses = page.map(UserResponse::new);
@@ -47,6 +49,7 @@ public class PageTest {
         }
         System.out.println(content.size());
     }
+
 
     @Test
     public void getUserSlice() throws Exception {

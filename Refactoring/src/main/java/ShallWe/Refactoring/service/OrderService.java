@@ -30,7 +30,8 @@ public class OrderService {
     }
 
     public Order createOrder(OrderRequest request, User user) {
-        Order order = Order.builder(user)
+        Order order = Order.builder()
+                .user(user)
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .endTime(request.getEndTime())

@@ -3,7 +3,9 @@ package ShallWe.Refactoring.controller;
 import ShallWe.Refactoring.RunApplication;
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.partyMember.PartyMember;
+import ShallWe.Refactoring.entity.partyMember.PartyStatus;
 import ShallWe.Refactoring.entity.partyMember.dto.PartyMemberRequest;
+import ShallWe.Refactoring.entity.partyMember.dto.PartyMemberResponse;
 import ShallWe.Refactoring.entity.user.User;
 import ShallWe.Refactoring.service.OrderService;
 import ShallWe.Refactoring.service.PartyMemberService;
@@ -39,12 +41,13 @@ public class PartyMemberController {
         return "PartyMember Add request Success";
     }
 
-    @GetMapping("/partyMembers/list/{orderId}")
-    @ApiOperation("get Party Member List")
-    public List<PartyMember> getPartyMembers(@PathVariable("orderId") Long orderId) {
+    @GetMapping("/join-members/{orderId}")
+    @ApiOperation("get Party Join List")
+    public List<PartyMemberResponse> getPartyMembers(@PathVariable("orderId") Long orderId) {
         Order order = orderService.findOrder(orderId);
-        List<PartyMember> partyMembers = partyMemberService.findByOrder(order);
+        List<PartyMemberResponse> partyMembers = partyMemberService.findByOrderAndStatus(order, PartyStatus.JOIN);
         logger.info(partyMembers.size() + "");
+
         return partyMembers;
     }
 
