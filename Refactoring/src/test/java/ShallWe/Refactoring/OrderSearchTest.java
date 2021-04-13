@@ -19,9 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static ShallWe.Refactoring.entity.order.QOrder.*;
-import static ShallWe.Refactoring.entity.tag.QTag.*;
-
 @SpringBootTest
 @Transactional
 public class OrderSearchTest {

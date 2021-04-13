@@ -6,6 +6,7 @@ import ShallWe.Refactoring.entity.user.Info;
 import ShallWe.Refactoring.entity.user.User;
 import ShallWe.Refactoring.repository.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import java.util.List;
 @SpringBootTest
 @Transactional
 @Rollback(false)
+@DisplayName("유저 테스트")
 public class UserCreateTest {
 
     @Autowired
@@ -40,13 +42,13 @@ public class UserCreateTest {
     @Transactional
     public void findAll() throws Exception {
         List<UserResponse> responses = userRepository.findUserAll();
-        for(UserResponse res : responses){
+        for (UserResponse res : responses) {
             System.out.println(res.toString());
         }
     }
 
-
     @Test
+    @DisplayName("유저 데이터 생성")
     public void init() {
         int userCnt = 100;//생성 인원 설정
         for (int i = 0; i < userCnt; i++) {
@@ -56,9 +58,9 @@ public class UserCreateTest {
     }
 
     private void createUser(int num) {
-        String randomNum = (int) (Math.random() * 1000)+(num*1000)+"";
-        String name = "Clone"+randomNum;
-        String email = "user" + randomNum+ "@naver.com";
+        String randomNum = (int) (Math.random() * 1000) + (num * 1000) + "";
+        String name = "Clone" + randomNum;
+        String email = "user" + randomNum + "@naver.com";
         String password = "12341234";
 
 
@@ -69,10 +71,10 @@ public class UserCreateTest {
                 .nickname("nick" + randomNum)
                 .address(Address.builder()
                         .city("seoul")
-                        .street(randomNum+"street")
-                        .detail("room 1"+randomNum)
+                        .street(randomNum + "street")
+                        .detail("room 1" + randomNum)
                         .build())
-                .info(new Info(2021,3,13))
+                .info(createInfo())
                 .build();
         em.persist(user);
     }
@@ -86,11 +88,12 @@ public class UserCreateTest {
 
     @Test
     @Rollback
+    @DisplayName("패치조인 테스트")
     public void fetchTest() throws Exception {
         List<User> result = userRepository.findEntityGraphAll();
-        for(User eachUser : result){
+        for (User eachUser : result) {
             System.out.println(eachUser.toString());
-            if(eachUser.getOrders().size()>0)
+            if (eachUser.getOrders().size() > 0)
                 System.out.println("생성한 order 가 있는 유저");
         }
         System.out.println(result.size());

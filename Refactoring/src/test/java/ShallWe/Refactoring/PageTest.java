@@ -52,6 +52,7 @@ public class PageTest {
 
 
     @Test
+    @DisplayName("유저 슬라이스")
     public void getUserSlice() throws Exception {
         PageRequest pageRequest = PageRequest.of(0,10, Sort.by(Sort.Direction.DESC,"id"));
         Slice<User> slice = userRepository.findSliceByNameContaining("Clone",pageRequest);
@@ -62,7 +63,6 @@ public class PageTest {
             System.out.println(res.toString());
         }
 
-        System.out.println(content.size());
         System.out.println(content.size());
     }
 
