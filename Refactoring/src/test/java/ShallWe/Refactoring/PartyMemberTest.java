@@ -47,10 +47,10 @@ public class PartyMemberTest {
     @Test
     public void findPartyMember() throws Exception {
         Optional<Order> order = orderRepository.findById(1L);
-        Optional<User> member = userRepository.findById(1L);
+        Optional<User> user = userRepository.findById(1L);
 
-        if (order.isPresent() && member.isPresent()) {
-            Optional<PartyMember> partyMember = partyMemberRepository.findByOrderAndMember(order.get(), member.get());
+        if (order.isPresent() && user.isPresent()) {
+            Optional<PartyMember> partyMember = partyMemberRepository.findByOrderAndUser(order.get(), user.get());
             if (partyMember.isPresent()) {
                 logger.info(partyMember.get().toString());
             } else
