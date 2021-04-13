@@ -4,6 +4,7 @@ import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.partyMember.PartyMember;
 import ShallWe.Refactoring.entity.partyMember.PartyStatus;
 import ShallWe.Refactoring.entity.partyMember.dto.PartyMemberRequest;
+import ShallWe.Refactoring.entity.partyMember.dto.PartyMemberResponse;
 import ShallWe.Refactoring.entity.user.User;
 import ShallWe.Refactoring.repository.partyMember.PartyMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,10 @@ public class PartyMemberService {
     PartyMemberRepository partyMemberRepository;
 
     public void createPartyMember(User user, Order order, int price) {
-        PartyMember partyMember = PartyMember.builder(user, order, price)
+        PartyMember partyMember = PartyMember.builder()
+                .user(user)
+                .order(order)
+                .price(price)
                 .status(PartyStatus.JOIN)
                 .joinDescription("글 작성자 본인 입니다")
                 .build();
@@ -29,34 +33,39 @@ public class PartyMemberService {
         partyMemberRepository.save(partyMember);
     }
 
-    public List<PartyMember> findByOrder(Order order) {
+    public List<PartyMemberResponse> findByOrderAndStatus(Order order,PartyStatus status) {
+        return partyMemberRepository.findByOrderAndStatus(order,status);
+    }
+    public List<PartyMemberResponse> findByOrder(Order order) {
         return partyMemberRepository.findByOrder(order);
     }
-
     public PartyMember joinRequestParty(User user, Order order, PartyMemberRequest request) {
-        PartyMember partyMember = PartyMember.builder(user, order, request.getPrice())
+        PartyMember partyMember = PartyMember.builder()
+                .user(user)
+                .order(order)
+                .price(request.getPrice())
                 .status(PartyStatus.WAITING)
                 .joinDescription(request.getJoinDescription())
                 .build();
         return partyMemberRepository.save(partyMember);
     }
 
-    public void joinParty(Order order, User member) {
-        PartyMember partyMember = findPartyMember(order, member);
+    public void joinParty(Order order, User user) {
+        PartyMember partyMember = findPartyMember(order, user);
         partyMember.joinApprove();
     }
 
 
-    public void cancelParty(Order order, User member) {
-        PartyMember partyMember = findPartyMember(order, member);
+    public void cancelParty(Order order, User user) {
+        PartyMember partyMember = findPartyMember(order, user);
         partyMember.joinCancel();
     }
 
-    public PartyMember findPartyMember(Order order, User member) {
-        Optional<PartyMember> partyMember = partyMemberRepository.findByOrderAndMember(order, member);
+    public PartyMember findPartyMember(Order order, User user) {
+        Optional<PartyMember> partyMember = partyMemberRepository.findByOrderAndUser(order, user);
         if (partyMember.isPresent()) {
             return partyMember.get();
         } else
-            throw new NullPointerException("no have member");
+            throw new NullPointerException("no have user");
     }
 }

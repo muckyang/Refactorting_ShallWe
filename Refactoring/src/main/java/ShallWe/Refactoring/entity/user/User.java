@@ -14,10 +14,10 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Builder(builderMethodName = "userBuilder")
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-@ToString(of = {"name", "email", "nickname","address","info",})
+@ToString(of = {"name", "email", "nickname", "address", "info",})
 @Table(name = "user")
 public class User extends BaseEntity {
     @Id
@@ -33,25 +33,19 @@ public class User extends BaseEntity {
     private Info info;
 
     @OneToMany(mappedBy = "user")
+    @Builder.Default
     private List<Order> orders = new ArrayList<>();
 
-    public static UserBuilder builder(String name,String email,String password){
-        return userBuilder()
-                .name(name)
-                .email(email)
-                .password(password);
-    }
 
     public User(UserRequest request) {
+        this.setNickname(request.getNickname());
+        this.setName(request.getName());
+        this.email = request.getEmail();
+        this.password = request.getPassword();
         int year = request.getYear();
         int month = request.getMonth();
         int day = request.getDay();
-
-        this.setInfo(new Info(year, month, day));
-        this.adapting(request);
-    }
-
-    public void adapterAddress(UserRequest request) {
+        setInfo(new Info(year, month, day));
         String city = request.getCity();
         String street = request.getStreet();
         String detail = request.getDetail();
@@ -59,18 +53,15 @@ public class User extends BaseEntity {
     }
 
     public void setAddress(String city, String street, String detail) {
-        this.address = Address.builder(city,street,detail).build();
+        this.address = Address.builder()
+                .city(city)
+                .street(street)
+                .detail(detail)
+                .build();
     }
 
-    public void adapting(UserRequest request) {
-        this.setNickname(request.getNickname());
-        this.setName(request.getName());
-        this.email = request.getEmail();
-        this.password = request.getPassword();
-        this.adapterAddress(request);
-    }
 
-    public void addOrder(Order order){
+    public void addOrder(Order order) {
         orders.add(order);
     }
 

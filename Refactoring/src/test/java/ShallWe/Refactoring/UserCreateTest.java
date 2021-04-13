@@ -62,9 +62,16 @@ public class UserCreateTest {
         String password = "12341234";
 
 
-        User user = User.builder(name,email,password)
+        User user = User.builder()
+                .name(name)
+                .password(password)
+                .email(email)
                 .nickname("nick" + randomNum)
-                .address(Address.builder("seoul",randomNum+"street","room 1"+randomNum).build())
+                .address(Address.builder()
+                        .city("seoul")
+                        .street(randomNum+"street")
+                        .detail("room 1"+randomNum)
+                        .build())
                 .info(new Info(2021,3,13))
                 .build();
         em.persist(user);

@@ -19,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 // 없앨수는 없음 변경이 필요한 경우도 있기 때문 아니면 SET메소드 다 작성해야함
-@Builder(builderMethodName = "orderBuilder")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString(of = {"user", "title", "description", "category", "status", "goalPrice", "sumPrice", "endTime"})
@@ -41,6 +41,7 @@ public class Order extends BaseEntity {
     private User user;
 
     @OneToMany(mappedBy = "order")
+    @Builder.Default
     private List<Comment> comments = new ArrayList<>();
 
     private String title;
@@ -52,32 +53,23 @@ public class Order extends BaseEntity {
     private int commentCount;
 
     @OneToMany(mappedBy = "order")
+    @Builder.Default
     private List<OrderLike> orderLikeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "order")
+    @Builder.Default
     private List<Tag> tags = new ArrayList<>();
 
     // TODO 기존 Temp 필드 삭제) 저장, 임시저장, 활성화 확인 필드.
     // TODO image, url, Kakao Talk link 추가
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "user")
+    @Builder.Default
     private List<PartyMember> members = new ArrayList<>();
 
     @Column(name = "order_end_time")
     private LocalDateTime endTime;
 
-    public static OrderBuilder builder(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException("필수 파라미터 누락");
-        }
-        //TODO CATEGORY SETTING
-        return orderBuilder()
-                .user(user)
-                .status(OrderStatus.WAITING)
-                .members(new ArrayList<>())
-                .tags(new ArrayList<>())
-                .comments(new ArrayList<>());
-    }
 
     // 연관 관계 편의 메소드
     public void setUser(User user) {

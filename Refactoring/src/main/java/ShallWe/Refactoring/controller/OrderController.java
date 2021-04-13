@@ -9,6 +9,7 @@ import ShallWe.Refactoring.service.PartyMemberService;
 import ShallWe.Refactoring.service.TagService;
 import ShallWe.Refactoring.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,17 +18,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class OrderController {
 
-    @Autowired
-    OrderService orderService;
-    @Autowired
-    UserService userService;
-    @Autowired
-    TagService tagService;
-    @Autowired
-    PartyMemberService partyMemberService;
+    private final OrderService orderService;
+    private final UserService userService;
+    private final TagService tagService;
+    private final PartyMemberService partyMemberService;
 
     @PostMapping("/orders/create")
     @ApiOperation("Order Create")
@@ -41,7 +39,7 @@ public class OrderController {
 
     @GetMapping("/orders/{id}")
     @ApiOperation("Order Get")
-    public OrderResponse getOrder(@PathVariable Long orderId) {
+    public OrderResponse getOrder(@PathVariable("id") Long orderId) {
         Order order = orderService.findOrder(orderId);
         return new OrderResponse(order);
     }
