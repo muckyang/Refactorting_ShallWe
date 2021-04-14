@@ -1,8 +1,6 @@
 package ShallWe.Refactoring.entity.order;
 
 import ShallWe.Refactoring.entity.BaseEntity;
-import ShallWe.Refactoring.entity.order.dto.OrderRequest;
-import ShallWe.Refactoring.entity.order.dto.OrderRequestBuilder;
 import ShallWe.Refactoring.entity.tag.Tag;
 import lombok.*;
 import ShallWe.Refactoring.entity.comment.Comment;

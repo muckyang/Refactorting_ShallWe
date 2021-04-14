@@ -38,4 +38,8 @@ public class Comment extends BaseEntity {
         this.order = order;
         order.addComment(this);
     }
+    public void update(String text){
+        content = text;
+        status = CommentStatus.UPDATED;
+    }
 }
