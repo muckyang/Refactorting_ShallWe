@@ -18,12 +18,13 @@
 
   - 단점? 
     1. Q-Type 객체 관리 ? 
+    2. @Builder(methodName="~~") 사용시 Querydsl 컴파일 실패 문제발생
     
     
 <br/>
 
- - 빌더 패턴과 QueryProjection을 적용햐 DTO 객체로 변환시 this.field = req.getField()의 무수한 반복을 해결
- - QueryDSL 쿼리의 select( new QType(qtype객체) ) 를 이용, 조회시 ResponseDTO 객체로 변환
+ - @QueryProjection을 적용, DTO 객체로 쿼리결과를 반환받음
+ - @Builder의 적용으로 불변객체로 이용, 무분별한 Setter메소드 사용을 방지.
  - Request 요청시 
 
 
