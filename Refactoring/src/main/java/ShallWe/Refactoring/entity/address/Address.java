@@ -1,6 +1,5 @@
 package ShallWe.Refactoring.entity.address;
 
-import ShallWe.Refactoring.entity.order.dto.OrderRequestBuilder;
 import lombok.*;
 
 import javax.persistence.Embeddable;

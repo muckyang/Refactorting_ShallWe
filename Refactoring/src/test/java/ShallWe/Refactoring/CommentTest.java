@@ -7,7 +7,8 @@ import ShallWe.Refactoring.entity.user.User;
 import ShallWe.Refactoring.repository.comment.CommentRepository;
 import ShallWe.Refactoring.repository.order.OrderRepository;
 import ShallWe.Refactoring.repository.user.UserRepository;
-import org.junit.jupiter.api.Assertions;
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
+
 
 @SpringBootTest
 @Transactional
@@ -40,11 +42,13 @@ public class CommentTest {
         Comment comment = Comment.builder()
                 .order(order)
                 .user(user)
-                .content("댓글 작성합니다")
+                .content("댓글 작성 합니다")
                 .status(CommentStatus.NORMAL)
                 .build();
 
         commentRepository.save(comment);
-//        assert(comment);
+        order.addComment(comment);
+        assertThat(comment).isEqualTo(commentRepository.getOne(comment.getId()));
+
     }
 }

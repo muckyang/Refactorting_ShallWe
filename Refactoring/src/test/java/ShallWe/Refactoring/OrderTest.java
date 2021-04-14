@@ -4,7 +4,6 @@ import ShallWe.Refactoring.entity.order.Category;
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.order.OrderStatus;
 import ShallWe.Refactoring.entity.order.dto.OrderRequest;
-import ShallWe.Refactoring.entity.order.dto.OrderRequestBuilder;
 import ShallWe.Refactoring.entity.order.dto.OrderResponse;
 import ShallWe.Refactoring.entity.partyMember.PartyMember;
 import ShallWe.Refactoring.entity.partyMember.PartyStatus;
@@ -32,9 +31,6 @@ import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -72,14 +68,15 @@ public class OrderTest {
         List<String> tags = new ArrayList<>();
         tags.add("치킨");
 
-        OrderRequest request = new OrderRequest();
-        request.setUserId(1L);
-        request.setTitle("치킨먹을사람~");
-        request.setDescription("치킨 같이 시켜 먹어요!");
-        request.setGoalPrice(32000);
-        request.setCategory(Category.DELIVERY.toString());
-        request.setTags(tags);
-        request.setEndTime(LocalDateTime.now().plusHours(4L));
+        OrderRequest request = OrderRequest.builder()
+                .userId(1L)
+                .title("치킨먹을사람~")
+                .description("치킨 같이 시켜 먹어요!")
+                .tags(tags)
+                .category(Category.DELIVERY.toString())
+                .goalPrice(32000)
+                .endTime(LocalDateTime.now().plusHours(4L))
+                .build();
 
         User user = userService.findUser(request.getUserId());
 
