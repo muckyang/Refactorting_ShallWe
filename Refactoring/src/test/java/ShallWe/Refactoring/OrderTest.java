@@ -83,7 +83,8 @@ public class OrderTest {
 
         User user = userService.findUser(request.getUserId());
 
-        Order order = Order.builder(user)
+        Order order = Order.builder()
+                .user(user)
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .endTime(request.getEndTime())
@@ -105,7 +106,10 @@ public class OrderTest {
         }
 
         logger.info("before Party New");
-        PartyMember partyMember = PartyMember.builder(user, order, 6000)
+        PartyMember partyMember = PartyMember.builder()
+                .user(user)
+                .order(order)
+                .price(6000)
                 .status(PartyStatus.JOIN)
                 .joinDescription("글 게시자 본인 입니다.")
                 .build();

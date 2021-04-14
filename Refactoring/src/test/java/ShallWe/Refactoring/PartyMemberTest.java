@@ -50,7 +50,7 @@ public class PartyMemberTest {
         Optional<User> member = userRepository.findById(1L);
 
         if (order.isPresent() && member.isPresent()) {
-            Optional<PartyMember> partyMember = partyMemberRepository.findByOrderAndMember(order.get(), member.get());
+            Optional<PartyMember> partyMember = partyMemberRepository.findByOrderAndUser(order.get(), member.get());
             if (partyMember.isPresent()) {
                 logger.info(partyMember.get().toString());
             } else
