@@ -32,7 +32,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootTest
+@SpringBootTest(
+        properties = {"spring.config.location=classpath:application-test.yml"}
+)
 @Transactional
 @Rollback(false)
 public class OrderTest {
