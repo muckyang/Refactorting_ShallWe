@@ -6,11 +6,13 @@ import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.order.OrderStatus;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 @ToString(of={"id","userId","title","description"})
 public class OrderResponse {
     private Long id;

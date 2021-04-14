@@ -44,6 +44,12 @@ public class OrderController {
         return new OrderResponse(order);
     }
 
+    @GetMapping("/order-all")
+    @ApiOperation("Order Get All")
+    public List<OrderResponse> getOrderAll() {
+        return orderService.getAll();
+    }
+
     @GetMapping("/orders/list/paging")
     @ApiOperation("Order List Paging")
     public Page<OrderResponse> getOrderList(Pageable pageable) {

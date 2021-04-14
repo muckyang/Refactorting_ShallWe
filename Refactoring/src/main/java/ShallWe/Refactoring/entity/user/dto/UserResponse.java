@@ -5,11 +5,13 @@ import ShallWe.Refactoring.entity.address.Address;
 import ShallWe.Refactoring.entity.user.User;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
 @ToString
 public class UserResponse {
     private Long id;

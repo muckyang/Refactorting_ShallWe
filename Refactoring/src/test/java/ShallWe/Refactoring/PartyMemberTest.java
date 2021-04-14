@@ -21,7 +21,9 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(
+        properties = {"spring.config.location=classpath:application-test.yml"}
+)
 @Transactional
 public class PartyMemberTest {
 

@@ -19,7 +19,9 @@ import javax.persistence.EntityManager;
 
 import java.util.List;
 
-@SpringBootTest
+@SpringBootTest(
+        properties = {"spring.config.location=classpath:application-test.yml"}
+)
 @Transactional
 @Rollback(false)
 @DisplayName("유저 테스트")

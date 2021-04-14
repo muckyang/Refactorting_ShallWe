@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,13 @@ public class OrderService {
                 .build();
 
         return orderRepository.save(order);
+    }
+
+    public List<OrderResponse> getAll() {
+        List<OrderResponse> result = new ArrayList<>();
+        for (Order order : orderRepository.findAll())
+            result.add(new OrderResponse(order));
+        return result;
     }
 
     public List<OrderResponse> searchByTag(String tagName) {

@@ -19,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-@SpringBootTest
+@SpringBootTest(
+        properties = {"spring.config.location=classpath:application-test.yml"}
+)
 @Transactional
 public class OrderSearchTest {
 
