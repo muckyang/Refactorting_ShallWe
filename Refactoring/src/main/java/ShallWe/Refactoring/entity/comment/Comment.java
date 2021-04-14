@@ -1,9 +1,7 @@
 package ShallWe.Refactoring.entity.comment;
 
 import ShallWe.Refactoring.entity.BaseEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.user.User;
 
@@ -11,7 +9,10 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Setter @Getter
+@Setter
+@Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Table(name = "comment")
 public class Comment extends BaseEntity {
