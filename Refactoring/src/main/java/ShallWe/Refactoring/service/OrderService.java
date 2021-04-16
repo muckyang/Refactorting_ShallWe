@@ -30,7 +30,8 @@ public class OrderService {
             throw new NullPointerException("Order is null");
     }
 
-    public Order createOrder(OrderRequest request, User user) {
+    public Order createOrder(OrderRequest request, User user) throws IllegalStateException {
+
         Order order = Order.builder()
                 .user(user)
                 .title(request.getTitle())
@@ -39,8 +40,8 @@ public class OrderService {
                 .category(Category.valueOf(request.getCategory().toUpperCase()))
                 .goalPrice(request.getGoalPrice())
                 .build();
-
         return orderRepository.save(order);
+
     }
 
     public List<OrderResponse> getAll() {
