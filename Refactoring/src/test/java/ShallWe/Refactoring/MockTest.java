@@ -35,13 +35,12 @@ import java.util.List;
 import static org.assertj.core.api.BDDAssertions.then;
 
 
-@SpringBootTest(
+@SpringBootTest
+        (
         properties = {"spring.config.location=classpath:application-test.yml"},
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
-
 )
 @AutoConfigureMockMvc
-//@Slf4j
 public class MockTest {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -78,7 +77,6 @@ public class MockTest {
         getMemberRes(Long.parseLong("2"));
     }
 
-    @Test
     public void getMember(Long userId) throws Exception {
         mvc.perform(get("/api/users/" + userId))
                 .andExpect(status().isOk())
@@ -87,7 +85,6 @@ public class MockTest {
                 .andDo(print());
     }
 
-    @Test
     public void getMemberRes(Long userId) throws Exception {
         ResponseEntity<UserResponse> response =
                 restTemplate.getForEntity("/api/users/" + userId, UserResponse.class);
@@ -97,7 +94,7 @@ public class MockTest {
 
     }
     @Test
-    public void getAllMembers() throws Exception {
+    public void getAllOrders() throws Exception {
         ResponseEntity<OrderResponse[]> response =
                 restTemplate.getForEntity("/api/order-all", OrderResponse[].class);
         for( OrderResponse res : response.getBody()){

@@ -11,8 +11,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import java.util.Optional;
 import java.util.UUID;
 
-@EnableJpaAuditing
+
 @SpringBootApplication
+@EnableJpaAuditing
 public class RunApplication {
     public static void main(String[] args) {
         SpringApplication.run(RunApplication.class,args);

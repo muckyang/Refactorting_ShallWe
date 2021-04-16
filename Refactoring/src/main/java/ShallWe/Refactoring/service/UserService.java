@@ -34,6 +34,10 @@ public class UserService {
         throw new NullPointerException("Order is null");
     }
 
+    public List<UserResponse> findAll() {
+        return userRepository.findUserAll();
+    }
+
     public void banUser(Long userId) {
         User user = userRepository.getOne(userId);
         user.getInfo().setUserStatus(UserStatus.BAN);

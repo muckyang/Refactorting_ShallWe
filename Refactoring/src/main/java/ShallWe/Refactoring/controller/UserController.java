@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -39,6 +40,11 @@ public class UserController {
     @ApiOperation("회원 조회")
     public UserResponse getUser(@PathVariable("id") User user) {
         return new UserResponse(user);
+    }
+    @GetMapping("/user-all")
+    @ApiOperation("전체 회원 조회")
+    public List<UserResponse> getUsers() {
+        return userService.findAll();
     }
 
     @GetMapping("/checkNickname/{nickname}")
@@ -89,6 +95,8 @@ public class UserController {
         userService.activeUser(id);
         return "ban success!";
     }
+
+
 
 }
 
