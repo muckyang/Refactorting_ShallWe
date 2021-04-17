@@ -38,7 +38,7 @@ import java.util.Optional;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers =  UserController.class)
+@WebMvcTest(UserController.class)
 public class UserControllerTest {
 
     @Autowired
@@ -60,15 +60,9 @@ public class UserControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
 
-//        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-//        String requestJson = ow.writeValueAsString(request);
-//
-//        mvc.perform(post("/api/users").contentType(MediaType.APPLICATION_JSON)
-//                .content(requestJson))
-//                .andExpect(status().isOk())
-//                .andDo(print());
 
         ArrayList<UserResponse> userList = new ArrayList<>();
+        userList.add(new UserResponse(new User(request)));
         userList.add(new UserResponse(new User(request)));
         given(this.userService.findAll()).willReturn(userList);
     }
@@ -82,10 +76,9 @@ public class UserControllerTest {
 //        mvc.perform(get("/api/user-all").accept(MediaType.APPLICATION_JSON))
 //                .andExpect(status().isOk())
 //                .andDo(MockMvcResultHandlers.print());
-
+        System.out.println("=========================GET========================");
         mvc.perform(get("/api/user-all").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("request"))
                 .andDo(print());
     }
 
