@@ -1,4 +1,4 @@
-package ShallWe.Refactoring;
+package ShallWe.Refactoring.LegacyTest;
 
 import ShallWe.Refactoring.entity.comment.Comment;
 import ShallWe.Refactoring.entity.comment.CommentStatus;

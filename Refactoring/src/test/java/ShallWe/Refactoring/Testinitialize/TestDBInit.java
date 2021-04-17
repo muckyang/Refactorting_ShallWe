@@ -1,29 +1,31 @@
-package ShallWe.Refactoring;
+package ShallWe.Refactoring.Testinitialize;
 
+
+import ShallWe.Refactoring.entity.address.Address;
+import ShallWe.Refactoring.entity.comment.Comment;
+import ShallWe.Refactoring.entity.comment.CommentStatus;
 import ShallWe.Refactoring.entity.order.Category;
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.order.OrderStatus;
 import ShallWe.Refactoring.entity.order.dto.OrderRequest;
-import ShallWe.Refactoring.entity.order.dto.OrderResponse;
 import ShallWe.Refactoring.entity.partyMember.PartyMember;
 import ShallWe.Refactoring.entity.partyMember.PartyStatus;
 import ShallWe.Refactoring.entity.tag.Tag;
+import ShallWe.Refactoring.entity.user.Info;
 import ShallWe.Refactoring.entity.user.User;
+import ShallWe.Refactoring.repository.comment.CommentRepository;
 import ShallWe.Refactoring.repository.order.OrderRepository;
 import ShallWe.Refactoring.repository.partyMember.PartyMemberRepository;
 import ShallWe.Refactoring.repository.tag.TagRepository;
 import ShallWe.Refactoring.repository.user.UserRepository;
 import ShallWe.Refactoring.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,14 +34,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(
         properties = {"spring.config.location=classpath:application-test.yml"}
 )
 @Transactional
 @Rollback(false)
-public class OrderTest {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+public class TestDBInit {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private EntityManager em;
 
@@ -47,6 +51,9 @@ public class OrderTest {
     private UserRepository userRepository;
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
     @Autowired
     private TagRepository tagRepository;
     @Autowired
@@ -55,20 +62,54 @@ public class OrderTest {
     private UserService userService;
 
     @BeforeEach
-    public void createEM() {
-        logger.trace("*************** Order Test Start *******************");
+    public void before() {
+        logger.trace("*************** Start Test DB Init *******************");
+    }
+
+
+    @Test
+    @DisplayName("유저 데이터 생성")
+    public void init() {
+        int userCnt = 100;//생성 인원 설정
+        for (int i = 0; i < userCnt; i++) {
+            createUser(i);
+        }
+        logger.info("User Initialize COMPLETED");
+    }
+
+    private void createUser(int num) {
+        String randomNum = (int) (Math.random() * 1000) + (num * 1000) + "";
+        String name = "Clone" + randomNum;
+        String email = "user" + randomNum + "@naver.com";
+        String password = "12341234";
+        String nickname = "nick" + randomNum;
+        String city = "seoul";
+        String street = randomNum + "street";
+        String detail ="room 1" + randomNum;
+        int year = (int) (Math.random() * 30) + 1990;
+        int month = (int) (Math.random() * 12) + 1;
+        int day = (int) (Math.random() * 28) + 1;
+        User user = User.builder()
+                .name(name)
+                .password(password)
+                .email(email)
+                .nickname(nickname)
+                .address(Address.builder()
+                        .city(city)
+                        .street(street)
+                        .detail(detail)
+                        .build())
+                .info(new Info(year, month, day))
+                .build();
+        em.persist(user);
     }
 
     @Test
-    public void getOrderPageable() {
-        PageRequest pageRequest = PageRequest.of(0, 10,
-                Sort.by(Sort.Direction.DESC, "order_id"));
-    }
-
-    @Test
+    @DisplayName("주문데이터 생성")
     public void saveOrder() {
         List<String> tags = new ArrayList<>();
         tags.add("치킨");
+        tags.add("음식");
 
         OrderRequest request = OrderRequest.builder()
                 .userId(1L)
@@ -120,28 +161,21 @@ public class OrderTest {
     }
 
     @Test
-    public void fetchTest() throws Exception {
-        List<Order> result = orderRepository.findEntityGraphAll();
-        for (Order eachOrder : result) {
-            System.out.println(eachOrder.toString());
-        }
-        System.out.println(result.size());
-    }
+    @DisplayName("댓글 등록")
+    public void create() throws Exception {
+        Order order = orderRepository.getOne(1L);
+        User user = userRepository.getOne(2L);
+        Comment comment = Comment.builder()
+                .order(order)
+                .user(user)
+                .content("댓글 작성 합니다")
+                .status(CommentStatus.NORMAL)
+                .build();
 
-    @Test
-    public void orderPageTest() {
-        Pageable pageable = PageRequest.of(0, 1);
-        Page<OrderResponse> result = orderRepository.getOrderPaging(pageable);
-        for (OrderResponse or : result.getContent()) {
-            System.out.println(or.toString());
-        }
-    }
+        commentRepository.save(comment);
+        order.addComment(comment);
+        assertThat(comment).isEqualTo(commentRepository.getOne(comment.getId()));
 
-    @Test
-    public void EnumTest() throws Exception {
-        //then
-        Category status = Category.valueOf("SHARE");
-        System.out.println(status);
     }
 
 }

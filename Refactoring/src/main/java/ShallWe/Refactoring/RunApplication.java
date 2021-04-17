@@ -13,7 +13,6 @@ import java.util.UUID;
 
 
 @SpringBootApplication
-
 public class RunApplication {
     public static void main(String[] args) {
         SpringApplication.run(RunApplication.class,args);

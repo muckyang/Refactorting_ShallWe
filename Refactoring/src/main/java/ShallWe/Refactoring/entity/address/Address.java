@@ -11,9 +11,9 @@ import javax.persistence.Embeddable;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class Address {
-    private String city;
-    private String street;
-    private String detail;
+    private  String city;
+    private  String street;
+    private  String detail;
 
 }
 

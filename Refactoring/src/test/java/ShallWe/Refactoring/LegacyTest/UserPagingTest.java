@@ -1,4 +1,4 @@
-package ShallWe.Refactoring;
+package ShallWe.Refactoring.LegacyTest;
 
 import ShallWe.Refactoring.entity.user.User;
 import ShallWe.Refactoring.entity.user.dto.UserResponse;
@@ -23,7 +23,8 @@ import java.util.List;
         properties = {"spring.config.location=classpath:application-test.yml"}
 )
 @Transactional
-public class PageTest {
+public class UserPagingTest {
+
     @Autowired
     private EntityManager em;
 
