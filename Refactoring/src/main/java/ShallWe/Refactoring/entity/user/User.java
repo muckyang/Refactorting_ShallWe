@@ -28,20 +28,22 @@ public class User extends BaseEntity {
     private String email;
     private String password;
     private String nickname;
+    @Embedded
     private Address address;
+    @Embedded
     @Column(name = "user_info")
     private Info info;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<Order> orders = new ArrayList<>();
 
 
     public User(UserRequest request) {
-        this.setNickname(request.getNickname());
-        this.setName(request.getName());
-        this.email = request.getEmail();
-        this.password = request.getPassword();
+        setNickname(request.getNickname());
+        setName(request.getName());
+        setEmail(request.getEmail());
+        setPassword(request.getPassword());
         int year = request.getYear();
         int month = request.getMonth();
         int day = request.getDay();

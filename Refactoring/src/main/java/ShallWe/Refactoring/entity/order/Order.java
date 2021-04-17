@@ -50,18 +50,18 @@ public class Order extends BaseEntity {
     private int likeCount;
     private int commentCount;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order",cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<OrderLike> orderLikeList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order",cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<Tag> tags = new ArrayList<>();
 
     // TODO 기존 Temp 필드 삭제) 저장, 임시저장, 활성화 확인 필드.
     // TODO image, url, Kakao Talk link 추가
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<PartyMember> members = new ArrayList<>();
 

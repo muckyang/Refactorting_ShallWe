@@ -1,4 +1,4 @@
-package ShallWe.Refactoring;
+package ShallWe.Refactoring.LegacyTest;
 
 import ShallWe.Refactoring.entity.address.Address;
 import ShallWe.Refactoring.entity.user.dto.UserResponse;
@@ -23,8 +23,6 @@ import java.util.List;
         properties = {"spring.config.location=classpath:application-test.yml"}
 )
 @Transactional
-@Rollback(false)
-@DisplayName("유저 테스트")
 public class UserCreateTest {
 
     @Autowired
@@ -50,45 +48,6 @@ public class UserCreateTest {
     }
 
     @Test
-    @DisplayName("유저 데이터 생성")
-    public void init() {
-        int userCnt = 100;//생성 인원 설정
-        for (int i = 0; i < userCnt; i++) {
-            createUser(i);
-        }
-        logger.info("User Initialize COMPLETED");
-    }
-
-    private void createUser(int num) {
-        String randomNum = (int) (Math.random() * 1000) + (num * 1000) + "";
-        String name = "Clone" + randomNum;
-        String email = "user" + randomNum + "@naver.com";
-        String password = "12341234";
-
-
-        User user = User.builder()
-                .name(name)
-                .password(password)
-                .email(email)
-                .nickname("nick" + randomNum)
-                .address(Address.builder()
-                        .city("seoul")
-                        .street(randomNum + "street")
-                        .detail("room 1" + randomNum)
-                        .build())
-                .info(createInfo())
-                .build();
-        em.persist(user);
-    }
-
-    public Info createInfo() {
-        int year = (int) (Math.random() * 30) + 1990;
-        int month = (int) (Math.random() * 12) + 1;
-        int day = (int) (Math.random() * 28) + 1;
-        return new Info(year, month, day);
-    }
-
-    @Test
     @Rollback
     @DisplayName("패치조인 테스트")
     public void fetchTest() throws Exception {
@@ -100,4 +59,45 @@ public class UserCreateTest {
         }
         System.out.println(result.size());
     }
+
+
+//
+//    @Test
+//    @DisplayName("유저 데이터 생성")
+//    public void init() {
+//        int userCnt = 100;//생성 인원 설정
+//        for (int i = 0; i < userCnt; i++) {
+//            createUser(i);
+//        }
+//        logger.info("User Initialize COMPLETED");
+//    }
+//
+//    private void createUser(int num) {
+//        String randomNum = (int) (Math.random() * 1000) + (num * 1000) + "";
+//        String name = "Clone" + randomNum;
+//        String email = "user" + randomNum + "@naver.com";
+//        String password = "12341234";
+//
+//
+//        User user = User.builder()
+//                .name(name)
+//                .password(password)
+//                .email(email)
+//                .nickname("nick" + randomNum)
+//                .address(Address.builder()
+//                        .city("seoul")
+//                        .street(randomNum + "street")
+//                        .detail("room 1" + randomNum)
+//                        .build())
+//                .info(createInfo())
+//                .build();
+//        em.persist(user);
+//    }
+//
+//    public Info createInfo() {
+//        int year = (int) (Math.random() * 30) + 1990;
+//        int month = (int) (Math.random() * 12) + 1;
+//        int day = (int) (Math.random() * 28) + 1;
+//        return new Info(year, month, day);
+//    }
 }

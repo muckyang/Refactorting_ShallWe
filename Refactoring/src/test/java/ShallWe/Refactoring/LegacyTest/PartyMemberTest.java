@@ -1,4 +1,4 @@
-package ShallWe.Refactoring;
+package ShallWe.Refactoring.LegacyTest;
 
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.partyMember.PartyMember;
