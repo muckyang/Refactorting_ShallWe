@@ -1,9 +1,12 @@
 package ShallWe.Refactoring.entity.user.dto;
 
 
-import lombok.Data;
+import lombok.*;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserRequest {
     private Long id;
     private String email;

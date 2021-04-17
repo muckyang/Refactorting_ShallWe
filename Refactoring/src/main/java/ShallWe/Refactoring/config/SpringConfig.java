@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 
 
 @Configuration
+@EnableJpaAuditing
 public class SpringConfig {
     EntityManager em ;
     public SpringConfig(EntityManager em) {
