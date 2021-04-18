@@ -31,16 +31,19 @@ public class OrderService {
     }
 
     public Order createOrder(OrderRequest request, User user) throws IllegalStateException {
-
-        Order order = Order.builder()
-                .user(user)
-                .title(request.getTitle())
-                .description(request.getDescription())
-                .endTime(request.getEndTime())
-                .category(Category.valueOf(request.getCategory().toUpperCase()))
-                .goalPrice(request.getGoalPrice())
-                .build();
-        return orderRepository.save(order);
+        if(Category.contains(request.getCategory())) {
+            String category =request.getCategory().toUpperCase();
+            Order order = Order.builder()
+                    .user(user)
+                    .title(request.getTitle())
+                    .description(request.getDescription())
+                    .endTime(request.getEndTime())
+                    .category(Category.valueOf(category))
+                    .goalPrice(request.getGoalPrice())
+                    .build();
+            return orderRepository.save(order);
+        }else
+            throw new IllegalArgumentException("category 오류");
 
     }
 
