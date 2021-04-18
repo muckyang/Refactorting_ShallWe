@@ -37,7 +37,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
-        properties = {"spring.config.location=classpath:application-test.yml"}
+        properties = {"spring.config.location=classpath:application-init.yml"}
 )
 @Transactional
 @Rollback(false)
