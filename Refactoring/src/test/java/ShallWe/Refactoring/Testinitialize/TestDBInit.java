@@ -19,9 +19,7 @@ import ShallWe.Refactoring.repository.partyMember.PartyMemberRepository;
 import ShallWe.Refactoring.repository.tag.TagRepository;
 import ShallWe.Refactoring.repository.user.UserRepository;
 import ShallWe.Refactoring.service.UserService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +35,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
-        properties = {"spring.config.location=classpath:application-test.yml"}
+        properties = {"spring.config.location=classpath:application-init.yml"}
 )
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Transactional
 @Rollback(false)
 public class TestDBInit {
@@ -68,6 +67,7 @@ public class TestDBInit {
 
 
     @Test
+    @org.junit.jupiter.api.Order(1)
     @DisplayName("유저 데이터 생성")
     public void init() {
         int userCnt = 100;//생성 인원 설정
@@ -105,7 +105,8 @@ public class TestDBInit {
     }
 
     @Test
-    @DisplayName("주문데이터 생성")
+    @org.junit.jupiter.api.Order(2)
+    @DisplayName("주문 데이터 생성")
     public void saveOrder() {
         List<String> tags = new ArrayList<>();
         tags.add("치킨");
@@ -161,6 +162,7 @@ public class TestDBInit {
     }
 
     @Test
+    @org.junit.jupiter.api.Order(3)
     @DisplayName("댓글 등록")
     public void create() throws Exception {
         Order order = orderRepository.getOne(1L);
