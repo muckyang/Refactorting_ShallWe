@@ -1,7 +1,7 @@
 ### 기존 프로젝트 : https://github.com/muckyang/ShallWe_fin
 
 ### backend -> Refactoring 
-### QueryDSL 적용 및 가독성 개선에 목표를  프로젝트 입니다.  
+### QueryDSL 적용, 가독성 개선, TDD 적용  
  
 
 - Query DSL을 적용하여 기존 프로젝트의 문제점 해결
