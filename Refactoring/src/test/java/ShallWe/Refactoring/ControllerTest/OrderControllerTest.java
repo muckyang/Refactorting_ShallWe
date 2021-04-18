@@ -35,6 +35,10 @@ public class OrderControllerTest {
     public void createOrder() {
 
     }
+    @Test
+    public void getOrder() {
+
+    }
 
 
 }
