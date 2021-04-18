@@ -50,8 +50,8 @@ public class UserControllerTest {
                 .city("12341234").street("12341234").detail("12341234")
                 .year(2012).month(5).day(12)
                 .build();
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
 
 
         ArrayList<UserResponse> userList = new ArrayList<>();
@@ -72,7 +72,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("유저 1 출력")
+    @DisplayName("유저 GET")
     public void getUser() throws Exception {
         System.out.println("=========================GET USER 1=======================");
         mvc.perform(get("/api/users/" + 1).accept(MediaType.APPLICATION_JSON))
@@ -81,11 +81,12 @@ public class UserControllerTest {
 //                .andDo(MockMvcResultHandlers.print())
                 .andDo(print());
 
-        ResultActions actions = mvc.perform(get("/testValue2")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print());
+        ResultActions actions =
+                mvc.perform(get("/api/users/" + 1).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
 
 
+        actions.andDo(print()) ;
     }
 
 }

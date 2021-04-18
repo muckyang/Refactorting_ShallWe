@@ -30,8 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.assertj.core.api.BDDAssertions.then;
 
 
-@SpringBootTest
-        (
+@SpringBootTest(
         properties = {"spring.config.location=classpath:application-test.yml"},
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
