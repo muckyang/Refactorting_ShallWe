@@ -7,6 +7,7 @@ import ShallWe.Refactoring.entity.partyMember.dto.PartyMemberRequest;
 import ShallWe.Refactoring.entity.partyMember.dto.PartyMemberResponse;
 import ShallWe.Refactoring.entity.user.User;
 import ShallWe.Refactoring.repository.partyMember.PartyMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+
+@RequiredArgsConstructor
 public class PartyMemberService {
 
-    @Autowired
-    PartyMemberRepository partyMemberRepository;
+    private final PartyMemberRepository partyMemberRepository;
 
     public void createPartyMember(User user, Order order, int price) {
         PartyMember partyMember = PartyMember.builder()

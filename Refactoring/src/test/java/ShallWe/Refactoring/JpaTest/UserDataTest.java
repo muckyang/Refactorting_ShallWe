@@ -23,9 +23,8 @@ public class UserDataTest {
     private UserRepository userRepository;
 
     @Test
-    @DisplayName("회원 저장")
+    @DisplayName("회원 생성 및 조회")
     public void userSave() throws Exception {
-        //given
         User user = User.builder()
                 .name("Joe")
                 .password("12341234")
@@ -39,13 +38,19 @@ public class UserDataTest {
                 .info(new Info(2012, 5, 12))
                 .build();
         System.out.println(user.toString());
-        //when 오류시점
+
         userRepository.save(user);
         userRepository.findAll().forEach(System.out::println);
-        //then
+
         assertThat(user).isEqualTo(userRepository.getOne(user.getId()));
 
     }
 
+    @Test
+    @DisplayName("전체 삭제")
+    public void deleteAll() throws Exception {
+        userRepository.deleteAll();
+        assertThat(0).isEqualTo(userRepository.findAll().size());
+    }
 
 }

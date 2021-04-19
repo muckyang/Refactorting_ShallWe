@@ -26,27 +26,27 @@ public class OrderDataTest {
     @Autowired
     UserRepository userRepository;
 
-
     @Test
     @DisplayName("카테고리 오류")
     public void orderCreateFail() throws Exception {
         User user = userRepository.getOne(1L);
-        try {
+        String category = "NOPE";
+        if (Category.contains(category)) {
             Order order = Order.builder()
                     .user(user)
                     .title("존재하지 않는 카테고리")
                     .description("FAIL!")
                     .endTime(LocalDateTime.now().plusHours(4))
                     .goalPrice(40000)
-                    .category(Category.valueOf("FAIL"))
+                    .category(Category.valueOf("NOPE"))
                     .status(OrderStatus.WAITING)
                     .build();
             orderRepository.save(order);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+        }else {
+            System.out.println("fail");
         }
-
     }
+
     @Test
     @DisplayName("주문 생성")
     public void orderCreate() throws Exception {
@@ -63,7 +63,6 @@ public class OrderDataTest {
                 .build();
         orderRepository.save(order);
 
-
         assertThat(order).isEqualTo(orderRepository.getOne(order.getId()));
         System.out.println(order.getId());
     }
@@ -76,9 +75,9 @@ public class OrderDataTest {
         System.out.println(orderRepository.getOne(1L).getId());
         try {
             assertThat(order).isEqualTo(orderRepository.getOne(1L));
-            System.out.println("왜 살아있음? ");
-        }catch (NullPointerException e){
-            System.out.println("삭제돼서 없음");
+            System.out.println("아직 남아 있는 경우");
+        } catch (NullPointerException e) {
+            System.out.println("삭제되어 없음");
             e.printStackTrace();
         }
     }

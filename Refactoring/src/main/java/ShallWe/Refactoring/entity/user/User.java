@@ -4,6 +4,7 @@ import ShallWe.Refactoring.entity.BaseEntity;
 import ShallWe.Refactoring.entity.address.Address;
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.user.dto.UserRequest;
+import com.sun.istack.NotNull;
 import lombok.*;
 
 

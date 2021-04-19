@@ -10,10 +10,11 @@ import ShallWe.Refactoring.service.OrderService;
 import ShallWe.Refactoring.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class CommentController {
     private final CommentService commentService;

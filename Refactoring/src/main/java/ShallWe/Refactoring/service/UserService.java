@@ -6,6 +6,7 @@ import ShallWe.Refactoring.entity.user.dto.UserRequest;
 import ShallWe.Refactoring.entity.user.dto.UserResponse;
 import ShallWe.Refactoring.exception.DuplicationNicknameException;
 import ShallWe.Refactoring.repository.user.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +17,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserResponse save(UserRequest request) {
         User user = new User(request);

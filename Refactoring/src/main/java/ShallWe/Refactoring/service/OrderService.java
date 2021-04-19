@@ -6,6 +6,7 @@ import ShallWe.Refactoring.entity.order.dto.OrderRequest;
 import ShallWe.Refactoring.entity.order.dto.OrderResponse;
 import ShallWe.Refactoring.entity.user.User;
 import ShallWe.Refactoring.repository.order.OrderRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +17,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
 
-    @Autowired
-    OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
     public Order findOrder(Long orderId) {
         Optional<Order> order = orderRepository.findById(orderId);
@@ -31,16 +32,19 @@ public class OrderService {
     }
 
     public Order createOrder(OrderRequest request, User user) throws IllegalStateException {
-
-        Order order = Order.builder()
-                .user(user)
-                .title(request.getTitle())
-                .description(request.getDescription())
-                .endTime(request.getEndTime())
-                .category(Category.valueOf(request.getCategory().toUpperCase()))
-                .goalPrice(request.getGoalPrice())
-                .build();
-        return orderRepository.save(order);
+        if(Category.contains(request.getCategory())) {
+            String category =request.getCategory().toUpperCase();
+            Order order = Order.builder()
+                    .user(user)
+                    .title(request.getTitle())
+                    .description(request.getDescription())
+                    .endTime(request.getEndTime())
+                    .category(Category.valueOf(category))
+                    .goalPrice(request.getGoalPrice())
+                    .build();
+            return orderRepository.save(order);
+        }else
+            throw new IllegalArgumentException("category 오류");
 
     }
 
