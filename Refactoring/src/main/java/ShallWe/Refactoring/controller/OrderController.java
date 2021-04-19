@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class OrderController {
 
     @PostMapping("/orders/create")
     @ApiOperation("Order Create")
-    public OrderResponse createOrder(@RequestBody OrderRequest request) {
+    public OrderResponse createOrder(@Valid @RequestBody OrderRequest request) {
         User user = userService.findUser(request.getUserId());
         Order order = orderService.createOrder(request, user);
         tagService.createTags(order, request.getTags());

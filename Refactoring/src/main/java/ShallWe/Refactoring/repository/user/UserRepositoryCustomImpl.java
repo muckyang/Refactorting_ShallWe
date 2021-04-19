@@ -30,7 +30,6 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                 .fetch();
     }
 
-
     @Override
     public Page<UserResponse> getUserPaging(Pageable pageable) {
 

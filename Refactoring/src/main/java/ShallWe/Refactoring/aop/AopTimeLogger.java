@@ -33,6 +33,7 @@ public class AopTimeLogger {
         long runtime = System.currentTimeMillis() - timer;
         String className = joinPoint.getTarget().toString();
         String methodName = joinPoint.getSignature().getName();
-        logger.info(className + " - " + methodName + " Running Time : " + runtime);
+        logger.info(className);
+        logger.info(methodName + " Running Time : " + runtime);
     }
 }

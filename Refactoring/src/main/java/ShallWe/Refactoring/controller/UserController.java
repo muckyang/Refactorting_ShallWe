@@ -1,14 +1,12 @@
 package ShallWe.Refactoring.controller;
 
-import ShallWe.Refactoring.entity.user.UserStatus;
 import ShallWe.Refactoring.entity.user.dto.UserRequest;
 import ShallWe.Refactoring.entity.user.dto.UserResponse;
 import ShallWe.Refactoring.entity.user.User;
-import ShallWe.Refactoring.exception.DuplicationNicknameException;
-import ShallWe.Refactoring.repository.user.UserRepository;
 import ShallWe.Refactoring.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,11 +16,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class UserController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -30,7 +29,7 @@ public class UserController {
 
     @PostMapping("/users")
     @ApiOperation(value = "회원가입")
-    public UserResponse joinUser(@RequestBody UserRequest request) throws Exception {
+    public UserResponse joinUser(@Valid @RequestBody UserRequest request) throws Exception {
         return userService.save(request);
     }
 
