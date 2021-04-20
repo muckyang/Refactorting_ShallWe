@@ -45,12 +45,10 @@ public class TestDBInit {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private EntityManager em;
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private OrderRepository orderRepository;
-
     @Autowired
     private CommentRepository commentRepository;
     @Autowired

@@ -1,9 +1,6 @@
 package ShallWe.Refactoring.entity.partyMember;
 
 import ShallWe.Refactoring.entity.BaseEntity;
-import ShallWe.Refactoring.entity.order.OrderStatus;
-import ShallWe.Refactoring.entity.partyMember.dto.PartyMemberResponse;
-import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 import ShallWe.Refactoring.entity.order.Order;
 import ShallWe.Refactoring.entity.user.User;
@@ -31,6 +28,7 @@ public class PartyMember  extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
     private int price;
 
     @Enumerated(EnumType.STRING)

@@ -22,10 +22,10 @@ import static org.assertj.core.api.Assertions.*;
 public class OrderDataTest {
 
     @Autowired
-    OrderRepository orderRepository;
-    @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    OrderRepository orderRepository;
     @Test
     @DisplayName("카테고리 오류")
     public void orderCreateFail() throws Exception {

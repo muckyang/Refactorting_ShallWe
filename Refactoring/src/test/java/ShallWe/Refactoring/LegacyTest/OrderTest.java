@@ -1,14 +1,7 @@
 package ShallWe.Refactoring.LegacyTest;
 
-import ShallWe.Refactoring.entity.order.Category;
 import ShallWe.Refactoring.entity.order.Order;
-import ShallWe.Refactoring.entity.order.OrderStatus;
-import ShallWe.Refactoring.entity.order.dto.OrderRequest;
 import ShallWe.Refactoring.entity.order.dto.OrderResponse;
-import ShallWe.Refactoring.entity.partyMember.PartyMember;
-import ShallWe.Refactoring.entity.partyMember.PartyStatus;
-import ShallWe.Refactoring.entity.tag.Tag;
-import ShallWe.Refactoring.entity.user.User;
 import ShallWe.Refactoring.repository.order.OrderRepository;
 import ShallWe.Refactoring.repository.partyMember.PartyMemberRepository;
 import ShallWe.Refactoring.repository.tag.TagRepository;
@@ -29,8 +22,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest(
@@ -68,7 +59,7 @@ public class OrderTest {
 
     @Test
     public void fetchTest() throws Exception {
-        List<Order> result = orderRepository.findEntityGraphAll();
+        List<Order> result = orderRepository.findEntityGraphOrder();
         for (Order eachOrder : result) {
             System.out.println(eachOrder.toString());
         }
