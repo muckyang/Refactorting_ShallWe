@@ -16,7 +16,7 @@ public interface OrderRepository extends OrderRepositoryCustom,OrderSearchCustom
 
     @EntityGraph(attributePaths = {"user"})
     @Query("select o from Order o")
-    List<Order> findEntityGraphAll();
+    List<Order> findEntityGraphOrder();
 
     @Query("select o from Order o join fetch o.user")
     List<Order> findFetchJoin();

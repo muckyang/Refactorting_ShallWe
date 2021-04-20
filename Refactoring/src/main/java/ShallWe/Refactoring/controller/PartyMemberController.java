@@ -59,7 +59,7 @@ public class PartyMemberController {
         return partyMembers;
     }
 
-    //TODO 게시물 주인 / 게시물 번호 / 변경될 인원
+    //TODO 게시물 주인 / 게시물 번호 / 변경될 유저
     @PatchMapping("/partyMembers/join/{userId}/{orderId}/{memberId}")
     @ApiOperation("Do Join Member")
     public String joinMember(@PathVariable("userId") Long userId,
