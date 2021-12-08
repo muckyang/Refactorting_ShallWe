@@ -72,22 +72,22 @@ public class AdminController {
 //        String adminId = req.getAdminId();
 //        String password = req.getPassword();
 //        System.out.println(adminId  + " " + password);
-//        Optional<Admin> adminOpt = adminDao.getAdminByAdminIdAndPassword(adminId, password);
-//        System.out.println(adminOpt.get().toString());
-//        if (adminOpt.isPresent()) {
-//            System.out.println("로그인 성공  : " + adminId);
-//            Admin admin = new Admin(adminId, password);
-//            String admintoken = jwtService.createAdminLoginToken(admin);
-//
-//            User usert = userDao.getUserByEmail(adminId);
-//
-//            User user = new User();
-//            user.setNickname(usert.getNickname());
-//            user.setEmail(adminId);
-//            String token = jwtService.createLoginToken(user);
-//            AdminLoginResponse result = new AdminLoginResponse();
-//            result.setAdminToken(admintoken);
-//            result.setToken(token);
+        Optional<Admin> adminOpt = adminDao.getAdminByAdminIdAndPassword(adminId, password);
+        System.out.println(adminOpt.get().toString());
+        if (adminOpt.isPresent()) {
+            System.out.println("로그인 성공  : " + adminId);
+            Admin admin = new Admin(adminId, password);
+            String admintoken = jwtService.createAdminLoginToken(admin);
+
+            User usert = userDao.getUserByEmail(adminId);
+
+            User user = new User();
+            user.setNickname(usert.getNickname());
+            user.setEmail(adminId);
+            String token mpile
+            AdminLoginResponse result = new AdminLoginResponse();
+            result.setAdminToken(admintoken);
+            result.setToken(token);
 //
 //            return new ResponseEntity<>(result, HttpStatus.OK);
 //        } else {

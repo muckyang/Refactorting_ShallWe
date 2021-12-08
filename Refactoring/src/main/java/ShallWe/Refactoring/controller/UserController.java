@@ -39,13 +39,13 @@ public class UserController {
         User user = userService.findUser(userId);
         return new UserResponse(user);
     }
-    //컨버팅 방식 자잘하게 사용가능 repository로 찾게 됨
-    //조회 용도로만 사용해야하는 주의사항이 있다.
-    //    @GetMapping("/users/{id}")
-//    @ApiOperation("회원 조회")
-//    public UserResponse getUser(@PathVariable("id") User user) {
-//        return new UserResponse(user);
-//    }
+//    컨버팅 방식 자잘하게 사용가능 repository로 찾게 됨
+//    조회 용도로만 사용해야하는 주의사항이 있다.
+    @GetMapping("/users/{id}")
+    @ApiOperation("회원 조회")
+    public UserResponse getUser(@PathVariable("id") User user) {
+        return new UserResponse(user);
+    }
     @GetMapping("/user-all")
     @ApiOperation("전체 회원 조회")
     public List<UserResponse> getUsers() {

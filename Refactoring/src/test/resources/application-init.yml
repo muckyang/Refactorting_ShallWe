@@ -3,10 +3,23 @@ spring:
     ansi:
       enabled: always
   datasource:
-    url: jdbc:mariadb://localhost:3306/shallwetest?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: root
+    #local
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: jdbc:mariadb://localhost:3306/shallwetest?useUnicode=true&characterEncoding=utf-8
+#    username: root
+#    password: root
+
+    #AWS local
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: jdbc:mariadb://3.37.35.243:3306/shallwe?useUnicode=true&characterEncoding=utf-8
+#    username: root
+#    password: root
+
+#   RDS
     driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://shallwe.ctfsm3aapnnp.ap-northeast-2.rds.amazonaws.com:3306/shallwe?useUnicode=true&characterEncoding=utf-8
+    username: admin
+    password: yh7839205!
   jpa:
     hibernate:
       ddl-auto: create #create , create-drop , update , validate, none

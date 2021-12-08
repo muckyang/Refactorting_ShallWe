@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 @RestControllerAdvice
 public class ApiException extends RuntimeException{
-
+    PriorityQueue
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
         Map<String, String> errors = new HashMap<>();
